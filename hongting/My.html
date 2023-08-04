@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> 당신의 연인은 어디에? 홍픽 </title>
+
+        <style>
+             @media screen and (min-width: 320px) and (max-width: 1439px) {
+                #navButton {
+                    display: grid;
+                    grid-template-columns: repeat(4, 4fr);
+                    grid-template-rows: 30px;
+                }
+                nav { 
+                    display: flex;
+                    width: auto;
+                    list-style-type: none;
+                    text-align: center;
+                }
+                li {
+                    display: inline-block;
+                    border: 1px solid #222;
+                    border-color: lightblue;
+                    text-align: center;
+                }
+                body {
+                    background-color:aliceblue;
+                }
+                a {
+                    color: black;
+                    text-decoration: none;
+                }
+            }
+        </style>
+    </head>
+    <header>
+        <nav id="navButton">
+            <li class="navButtons"> <a href="home.html"> 홈 </a></li>
+            <li class="navButtons"> <a href="matching.html"> 매칭 </a></li>
+            <li class="navButtons"> <a href="Result.html"> 결과 </a></li>
+            <li class="navButtons"> <a href="menu.html"> 메뉴 </a></li>
+        </nav>
+    </header>
+    <main class="MyContent">
+        <div id="My">
+            <h1>자기 소개를 해주세요</h1>
+            <form>
+                <fieldset>
+                    <ul>
+                        <li>
+                            <label for="age"> <input type="text" id="age" placeholder="나이 입력" size="10" required> </label>
+                        </li>
+                        <li>
+                            <p> 성별: </p>
+                            <input type="radio" name="sex" id="male" required>
+                            <label for="male"> 남성 </label>
+                            <label> <input type="radio" name="sex"id="female" required>
+                            <label for="female"> 여성 </label>
+                        </li>
+                        <li>
+                            <p>미팅 인원수: </p>
+                            <label> <input type="checkbox" value="1" > 소개팅 </label>
+                            <label> <input type="checkbox" value="2" required> 2명이서 </label>
+                            <label> <input type="checkbox" value="3" > 3명이서 </label>
+                            <label> <input type="checkbox" value="4" > 4명이서 </label>
+                        </li>
+                        <li>
+                            <label for ="extra"> 자유로운 자기소개</label>
+                            <textarea id="extra" cols="40" rows="10" placeholder="최소 10자의 자기소개를 적어주세요.
+                            &#10;자기소개를 길게 쓸수록 매칭확률이 높아집니다." required></textarea>
+                        </li>
+                    </ul>
+                </fieldset>
+                <div id="button">
+                    <button type="submit"> 제출 </label>
+                </div>
+            </form>
+        </div>
+    </main>
+   
+</html>
