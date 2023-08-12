@@ -143,14 +143,14 @@
         <script>
            
             function startFun1() {
-                if(/*유저 정보 x 이면*/ false) {
-                    /*카톡 api로 로그인하도록 창 연결*/
+                if(/*유저 정보 x 이면*/ true) {
+                    location.href='KakaoLogin.html';
                 }
                 else if(/*자기소개 없으면*/ false) {
                     location.href='My.html';
                 }
                 else {
-                    location.href='홍대축제.html';
+                    location.href='meeting.html';
                 }      
             }
 
@@ -161,10 +161,9 @@
                 else if(/*자기소개 없으면*/ true) {
                     location.href='My.html';
                 }
-                /* else if{
-                    소개팅-> 필수요소 2개
-                    미팅-> 인원수
-                } */
+                else {
+                    location.href='Choose.html';
+                } 
                 
             }
 
@@ -172,13 +171,12 @@
                 if(/*유저 정보 x 이면*/ false) {
                     /*카톡 api로 로그인하도록 창 연결*/
                 }
-                else if(/*자기소개 없으면*/ true) {
+                else if(/*자기소개 없으면*/ false) {
                     location.href='My.html';
                 }
-                /* else if{
-                    소개팅-> 필수요소 2개
-                    미팅-> 인원수
-                } */
+                else {
+                    location.href='Choose.html';
+                } 
                 
             }
         </script>

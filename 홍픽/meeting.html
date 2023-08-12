@@ -2,12 +2,20 @@
 <html lang="ko">
     <head>
         <meta charset="UTF-8">
-
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title> 당신의 연인은 어디에? 홍픽 </title>
-
         <style>
+            @import URL('https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=스왑');
+            body {
+                font-family: 'Nanum Brush Script', 필기체;
+            }
              @media screen and (min-width: 320px) and (max-width: 1439px) {
+        
+                header {
+                    top:0; left:0; right:0;
+                    width:100%;
+                    position: fixed;
+                }
                 #navButton {
                     display: grid;
                     grid-template-columns: repeat(4, 4fr);
@@ -15,23 +23,45 @@
                 }
                 nav { 
                     display: flex;
-                    width: auto;
                     list-style-type: none;
                     text-align: center;
+                    background-color:cornflowerblue;
+                    top:0; left:0; right:0;
                 }
                 li {
                     display: inline-block;
-                    border: 1px solid #222;
                     border-color: lightblue;
                     text-align: center;
+                    padding: 0;
+                    margin: 0;
                 }
                 body {
                     background-color:aliceblue;
                 }
                 a {
-                    color: black;
+                    color: white;
                     text-decoration: none;
                 }
+                h2 {
+                    grid-template-columns: 1fr;
+                    text-align: center;
+
+                }
+                fieldset {
+                    border: none;
+                }
+                button {
+                    background-color: aliceblue;
+                    border-radius: 25%;
+                    border-color: aliceblue;
+                }
+                #button {
+                    text-align: center;
+                }
+                p {
+                    text-align: center;
+                }
+
             }
         </style>
     </head>
@@ -43,41 +73,31 @@
             <li class="navButtons"> <a href="menu.html"> 메뉴 </a></li>
         </nav>
     </header>
-    <main class="MyContent">
-        <div id="My">
-            <h1>자기 소개를 해주세요</h1>
-            <form>
+    <main class="Hongik">
+        <body>
+            <br><br>
+            <h2>미팅에 나갈<br>인원수를 선택해주세요!<br></h2> <!--평균 나이, 직업, 원하는 미팅 지역 등 선택-->
+            <form id="MyForm">
                 <fieldset>
                     <ul>
                         <li>
-                            <label for="age"> <input type="text" id="age" placeholder="나이 입력" size="10" required> </label>
-                        </li>
-                        <li>
-                            <p> 성별: </p>
-                            <input type="radio" name="sex" id="male" required>
-                            <label for="male"> 남성 </label>
-                            <label> <input type="radio" name="sex"id="female" required>
-                            <label for="female"> 여성 </label>
-                        </li>
-                        <li>
                             <p>미팅 인원수: </p>
-                            <label> <input type="checkbox" value="1" > 소개팅 </label>
-                            <label> <input type="checkbox" value="2" required> 2명이서 </label>
+                            <label> <input type="checkbox" value="2" > 2명이서 </label>
                             <label> <input type="checkbox" value="3" > 3명이서 </label>
                             <label> <input type="checkbox" value="4" > 4명이서 </label>
-                        </li>
-                        <li>
-                            <label for ="extra"> 자유로운 자기소개</label>
-                            <textarea id="extra" cols="40" rows="10" placeholder="최소 10자의 자기소개를 적어주세요.
-                            &#10;자기소개를 길게 쓸수록 매칭확률이 높아집니다." required></textarea>
                         </li>
                     </ul>
                 </fieldset>
                 <div id="button">
-                    <button type="submit"> 제출 </label>
+                    <button type="button" onclick="meetingSubmit();"> 제출 </label>
                 </div>
-            </form>
-        </div>
+                <script>
+                    const form = document.getElementById("MyForm");
+                    function meetingSubmit() {
+                        form.submit();
+                        location.href='meeting2.html';
+                    }
+                </script>
+        </body>
     </main>
-   
 </html>

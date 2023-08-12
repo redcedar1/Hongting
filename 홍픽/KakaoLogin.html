@@ -45,6 +45,36 @@
                     color: white;
                     text-decoration: none;
                 }
+                h2 {
+                    grid-template-columns: 1fr;
+                    text-align: center;
+
+                }
+                #Login {
+                    display: grid;
+                    grid-template-columns: repeat(8, 1fr);
+                    grid-template-rows: repeat(3, 1fr);
+                    grid-column-gap: 30px;
+                    grid-row-gap: 50px;
+                }
+                .box1 {
+                    grid-column: 1/4;
+                    grid-row: 1/2;
+                    display: inline-block;
+                    background-color: pink;
+                    border-radius: 25%;
+                    text-align: center;
+                    cursor : pointer;
+                }
+                .box2 {
+                    grid-column: 1/4;
+                    grid-row: 2/3;
+                    display: inline-block;
+                    background-color: pink;
+                    border-radius: 25%;
+                    text-align: center;
+                    cursor : pointer;
+                }
             }
         </style>
     </head>
@@ -56,8 +86,34 @@
             <li class="navButtons"> <a href="menu.html"> 메뉴 </a></li>
         </nav>
     </header>
-    <main class="HomeContent">
+    <main class="KakaoLogin">
         <body>
+            <br><br>
+            <h2>홍팅 사용을 위해 <br>카카오톡으로 간편하게 로그인 해주세요</h2>
+            <br><br>
+        <div id="Login">
+        <div class="box1" onclick="LoginFun();">
+                카카오톡으로<br>로그인
+        </div>
+        <div class="box2" onclick="JoinFun();">
+            카카오톡으로<br>회원가입
+        </div>
+
+        <script>
+            function LoginFun() {
+                /*로그인 api 사용해(함수) 로그인 하고 리턴값 받기*/
+                if(/*자기소개 없으면*/ false) {
+                    location.href='My.html';
+                }
+                else {
+                    location.href='home.html';
+                }   
+            }
+            function JoinFun() {
+                /*카톡 api 사용해(함수) 회원가입 하고 리턴값 받기*/
+                LoginFun();
+            }
+        </script>
         </body>
     </main>
 </html>
