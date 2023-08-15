@@ -1,46 +1,68 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+
+from .models import UserProfile
 from .service import UserProfileService
 
 def create_user_profile(request):
     if request.method == 'POST':
         age = request.POST.get('age')
-        gender = request.POST.get('gender')
-        group_size = request.POST.getlist('group_size')
-        #extra = request.POST.get('extra')
-
-        # 데이터 가공 또는 검증 부분 추가 가능
+        gender = request.POST.get('sex')
+        group_size = request.POST.get('group_size')
+        occupation = request.POST.get('occupation')
+        school_major = request.POST.get('school_major')
+        mbti = request.POST.get('mbti')
+        military_service = request.POST.get('military_service')
+        height = request.POST.get('height')
+        body_type = request.POST.get('body_type')
+        double_eyelids = request.POST.get('double_eyelids')
+        face_shape = request.POST.get('face_shape')
+        interests = request.POST.get('interests')
+        self_intro = request.POST.get('self_intro')
 
         profile_data = {
             'age': age,
             'gender': gender,
             'group_size': group_size,
-        #    'extra': extra
-            # 다른 필드 추가 가능
+            'occupation': occupation,
+            'school_major': school_major,
+            'mbti': mbti,
+            'military_service': military_service,
+            'height': height,
+            'body_type': body_type,
+            'double_eyelids': double_eyelids,
+            'face_shape': face_shape,
+            'interests': interests,
+            'self_intro': self_intro,
         }
 
-        user_profile_service = UserProfileService()
-        user_profile_service.create_user_profile(**profile_data)
+        user_profile = UserProfileService.create_user_profile(profile_data)
+        return render(request, 'home.html', {'user_profile': user_profile})
 
-        return redirect('home')  # 폼 제출 후 홈 페이지로 이동
-
-    return render(request, '홍대축제.html')  # GET 요청일 때 폼 표시
+    return render(request, 'matching.html')
 
 
-def home(request):
-    return render(request, 'home.html')
+from django.db.models import Q
 
-def view_user_profiles(request):
-    user_profile_service = UserProfileService()
-    user_profiles = user_profile_service.get_user_profiles()
+def match_profiles(selected_category01, selected_value01, selected_category02, selected_value02):
+    q1 = Q()
+    q2 = Q()
 
-    # 조회된 레코드들을 사용하여 작업 수행
+    if selected_category01 == 'mbti':
+        q1 |= Q(mbti=selected_value01)
+    elif selected_category01 == 'height':
+        q1 |= Q(height=float(selected_value01))
+    elif selected_category01 == 'age':
+        q1 |= Q(age=int(selected_value01))
 
-    return render(request, 'Result.html', {'user_profiles': user_profiles})
+    # 나머지 필드들에 대한 Q 객체 추가
 
-def hongdae_festival(request):
-    if request.method == 'POST':
-        group_size = request.POST.getlist('group_size')
-        user_profile_service = UserProfileService()
-        matching_profiles = user_profile_service.get_matching_profiles(group_size)
-        return render(request, 'Result.html', {'matching_profiles': matching_profiles})
-    return render(request, '홍대축제.html')
+    if selected_category02 == 'interests':
+        q2 |= Q(interests__icontains=selected_value02)
+    elif selected_category02 == 'body_type':
+        q2 |= Q(body_type=selected_value02)
+    elif selected_category02 == 'gender':
+        q2 |= Q(gender=selected_value02)
+    # 나머지 필드들에 대한 Q 객체 추가
+
+    matches = UserProfile.objects.filter(q1 & q2)
+    return matches
