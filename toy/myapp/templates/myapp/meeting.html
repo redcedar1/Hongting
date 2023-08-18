@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">{% load static %}
+  <link rel="stylesheet" href="{% static 'myapp/css/meeting.css' %}">
+  {% include 'myapp/index.html' %}
+  <main class="Hongik">
+
+    <body>
+      <br><br>
+      {% if error_message %}
+        <p>
+          <strong>{{ error_message }}</strong>
+        </p>
+      {% endif %}
+      <h2>미팅에 나갈<br>인원수를 선택해주세요!<br>(중복선택가능)</h2>
+      <script>
+        function checkAll() {
+          var checkboxes = document.getElementsByName("peoplenum");
+          var submit_peoplenum = [];
+
+          for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+              submit_peoplenum.push(checkboxes[i].value);
+            }
+          }
+
+          document
+            .getElementById("submit_peoplenum")
+            .value = submit_peoplenum.join(",");
+          return true;
+        }
+      </script>
+      <form id="MyForm" action='/home/meeting/' method="post" onsubmit="return checkAll()">
+        <fieldset>
+          <ul>
+            <li>
+              <p>미팅 인원수:
+              </p>
+              <label>
+                <input type="checkbox" name="peoplenum" value="2">
+                2명이서
+              </label>
+              <label>
+                <input type="checkbox" name="peoplenum" value="3">
+                3명이서
+              </label>
+              <label>
+                <input type="checkbox" name="peoplenum" value="4">
+                4명이서
+              </label>
+
+            </li>
+          </ul>
+        </fieldset>
+        <input type="hidden" name="submit_peoplenum" id="submit_peoplenum">
+        <div id="button">
+          <button type="submit">
+            제출
+          </button>
+        </div>
+      </body>
+    </main>
+
+  </html>

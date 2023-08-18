@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">{% load static %}
+  <link rel="stylesheet" href="{% static 'myapp/css/meeting2.css' %}">
+  {% include 'myapp/index.html' %}
+  <main class="Hongik">
+
+    <body>
+      <br><br>
+      <h2>
+        필수 정보를 입력해주세요!</h2>
+      <script>
+        function checkAll() {
+          var checkjobs = document.getElementsByName("job");
+          var submit_job = [];
+
+          var checklocations = document.getElementsByName("location");
+          var submit_location = [];
+
+          var checkages = document.getElementsByName("age");
+          var submit_age = [];
+
+          for (var i = 0; i < checkjobs.length; i++) {
+            if (checkjobs[i].checked) {
+              submit_job.push(checkjobs[i].value);
+            }
+          }
+
+          for (var i = 0; i < checklocations.length; i++) {
+            if (checklocations[i].checked) {
+              submit_location.push(checklocations[i].value);
+            }
+          }
+
+          for (var i = 0; i < checkages.length; i++) {
+            if (checkages[i].checked) {
+              submit_age.push(checkages[i].value);
+            }
+          }
+
+          document
+            .getElementById("submit_job")
+            .value = submit_job.join(",");
+          document
+            .getElementById("submit_location")
+            .value = submit_location.join(",");
+          document
+            .getElementById("submit_age")
+            .value = submit_age.join(",");
+
+          return true;
+        }
+      </script>
+      <form id="MyForm" action='/home/meeting2/' method="post" onsubmit="return checkAll()">
+        <fieldset>
+          <ul>
+            <li>
+              <p>미팅 주선자의 직업:
+              </p>
+              <label>
+                <input type="checkbox" name="job" value="대학생">
+                대학생
+              </label>
+              <label>
+                <input type="checkbox" name="job" value="대학원생">
+                대학원생
+              </label>
+              <label>
+                <input type="checkbox" name="job" value="취준생">
+                취준생
+              </label>
+              <label>
+                <input type="checkbox" name="job" value="직장인">
+                직장인
+              </label>
+            </li>
+            <li>
+              <p>미팅을 원하는 지역:
+              </p>
+              <label>
+                <input type="checkbox" name="location" value="서울 서부">
+                서울 서부
+              </label>
+              <label>
+                <input type="checkbox" name="location" value="서울 동부">
+                서울 동부
+              </label>
+              <br>
+              <label>
+                <input type="checkbox" name="location" value="서울 남부">
+                서울 남부
+              </label>
+              <label>
+                <input type="checkbox" name="location" value="서울 북부">
+                서울 북부
+              </label>
+            </p>
+          </li>
+          <li>
+            <p>미팅 참여자의 평균 나이:
+            </p>
+            <label>
+              <input name="age" type="checkbox" value="20">
+              20살
+            </label>
+            <label>
+              <input name="age" type="checkbox" value="21">
+              21살
+            </label>
+            <label>
+              <input name="age" type="checkbox" value="22">
+              22살</label>
+            <label>
+              <input name="age" type="checkbox" value="23">
+              23살</label>
+            <label>
+              <input name="age" type="checkbox" value="24">
+              24살</label>
+            <label>
+              <input name="age" type="checkbox" value="25">
+              25살</label>
+            <label>
+              <input name="age" type="checkbox" value="26">
+              26살</label>
+            <label>
+              <input name="age" type="checkbox" value="27">
+              27살</label>
+            <label>
+              <input name="age" type="checkbox" value="28">
+              28살</label>
+            <label>
+              <input name="age" type="checkbox" value="29">
+              29살</label>
+          </li>
+        </ul>
+      </fieldset>
+      <p id="one">제출 버튼을 누르면 매칭 신청이 됩니다!</p>
+      <br><br>
+      <input type="hidden" name="submit_job" id="submit_job">
+      <input type="hidden" name="submit_location" id="submit_location">
+      <input type="hidden" name="submit_age" id="submit_age">
+      <div id="button">
+        <button type="submit">
+          제출
+        </label>
+      </div>
+    </body>
+  </main>
+
+</html>

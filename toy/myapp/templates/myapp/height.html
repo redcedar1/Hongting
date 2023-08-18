@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">{% load static %}
+  <link rel="stylesheet" href="{% static 'myapp/css/height.css' %}">
+  {% include 'myapp/index.html' %}
+  <main class="AloneChoose2">
+
+    <body>
+      <script src="{% static 'myapp/js/Function.js' %}"></script>
+      <br><br>
+      <p>원하는 키 범위를 선택해주세요</p>
+      <br><br>
+
+      <form id="Choose">
+        <label>
+          <input type="checkbox" value="150미만">
+          150미만
+        </label>
+        <label>
+          <input type="checkbox" value="155">
+          150~155
+        </label>
+        <label>
+          <input type="checkbox" value="160">
+          155~160
+        </label>
+        <label>
+          <input type="checkbox" value="165">
+          160~165
+        </label>
+        <label>
+          <input type="checkbox" value="170">
+          165~170
+        </label>
+        <label>
+          <input type="checkbox" value="175">
+          170~175
+        </label>
+        <label>
+          <input type="checkbox" value="180">
+          175~180
+        </label>
+        <label>
+          <input type="checkbox" value="185">
+          180~185
+        </label>
+        <label>
+          <input type="checkbox" value="190">
+          185~190
+        </label>
+        <label>
+          <input type="checkbox" value="190이상">
+          190이상</label>
+      </form>
+      <br>
+      <div id="button">
+        <button type="button" onclick="ageSubmit();">
+          제출
+        </div>
+        <script>
+          const form = document.getElementById("Choose");
+
+          function ageSubmit() {
+            form.submit();
+            location.href = '/alonechoose2/';
+          }
+        </script>
+      </body>
+    </main>
+
+  </html>

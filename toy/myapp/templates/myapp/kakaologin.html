@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">{% load static %}
+  <link rel="stylesheet" href="{% static 'myapp/css/alonechoose.css' %}">
+  {% include 'myapp/index.html' %}
+  <main class="KakaoLogin">
+
+    <body>
+      <br><br>
+      <h2>홍팅 사용을 위해
+        <br>카카오톡으로 간편하게 로그인 해주세요</h2>
+      <br><br>
+      <div id="Login">
+        <div class="box1" onclick="LoginFun();">
+          카카오톡으로<br>로그인
+        </div>
+        <div class="box2" onclick="JoinFun();">
+          카카오톡으로<br>회원가입
+        </div>
+
+        <script>
+          function LoginFun() {
+            /* 로그인 api 사용해(함수) 로그인 하고 리턴값 받기 */
+            if (/* 자기소개 없으면 */
+            false) {
+              location.href = 'My.html';
+            } else {
+              location.href = 'home.html';
+            }
+          }
+
+          function JoinFun() {
+            /* 카톡 api 사용해(함수) 회원가입 하고 리턴값 받기 */
+            LoginFun();
+          }
+        </script>
+      </body>
+    </main>
+
+  </html>

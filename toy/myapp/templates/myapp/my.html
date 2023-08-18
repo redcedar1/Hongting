@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">{% load static %}
+  <link rel="stylesheet" href="{% static 'myapp/css/my.css' %}">
+  {% include 'myapp/index.html' %}
+  <script src="{% static 'myapp/js/Function.js' %}"></script>
+  <main class="MyContent">
+    <div id="My">
+      <br><br>
+      <h2>새로운 인연을 위한 준비를 해주세요!</h2>
+      <form>
+        <fieldset>
+          <ul>
+            <div id="str">
+              <script>
+                createStr();
+              </script>
+            </div>
+            <li id="form">
+              <script>
+                create();
+              </script>
+            </li>
+          </ul>
+        </fieldset>
+        <div id="button">
+          <button type="submit">
+            제출
+          </label>
+        </div>
+      </form>
+    </div>
+  </main>
+
+</html>

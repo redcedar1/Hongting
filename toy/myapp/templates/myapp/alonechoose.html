@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">{% load static %}
+  <link rel="stylesheet" href="{% static 'myapp/css/alonechoose.css' %}">
+  {% include 'myapp/index.html' %}
+  <main class="AloneChoose">
+
+    <body>
+      <script src="{% static 'myapp/js/Function.js' %}"></script>
+      <br><br>
+      <p>상대방의 원하는 필수조건을 기입해주세요!</p>
+      <form id="YouForm">
+        <fieldset>
+          <ul>
+            <li id="form1">
+              <script>
+                ageLevel();
+              </script>
+            </li>
+            <br><br>
+            <li id="form2">
+              <script>
+                job();
+              </script>
+              <div id="button">
+                <button type="button" onclick="ageSubmit();">
+                  제출
+                </div>
+              </li>
+            </ul>
+          </fieldset>
+        </form>
+        <script>
+          const form = document.getElementById("YouForm");
+
+          function ageSubmit() {
+            form.submit();
+            location.href = "/alonechoose2/";
+          }
+        </script>
+      </body>
+    </main>
+
+  </html>

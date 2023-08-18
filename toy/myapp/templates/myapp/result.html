@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">{% load static %}
+  <link rel="stylesheet" href="{% static 'myapp/css/result.css' %}">
+  {% include 'myapp/index.html' %}
+  <main class="ResultContent">
+
+    <body>
+      <div id="Result">
+        <div class="box1">
+          <br><br>
+          <p>
+            <strong>매칭된 상대</strong>
+          </p>
+        </div>
+        <div class="box2">
+          <p>
+            <strong>상대 아이디</strong>
+          </p>
+          <!--상대 아이디 정보 연동 되도록-->
+        </div>
+        <div class="box3">
+          <p>
+            <strong>상대정보<br>확인</strong>
+          </p>
+        </div>
+        <div class="box4">
+          <p>
+            <strong>카톡아이디<br>확인</strong>
+          </p>
+        </div>
+        <div class="box4" onclick="goKakao();">
+          <p>
+            <strong>카톡아이디<br>확인</strong>
+          </p>
+        </div>
+      </div>
+      <script>
+        function goKakao() {
+          location.href = '/kakao/';
+        }
+      </script>
+    </body>
+  </main>
+
+</html>
