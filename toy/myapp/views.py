@@ -2,6 +2,9 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.views.decorators.csrf import csrf_exempt
 from .models import Info
 from myproject import settings
+import requests
+from django.template import loader
+from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
   
@@ -9,6 +12,51 @@ count = 0
 
 def index(request):
     return render(request, 'myapp/index.html')
+
+
+def kakaologin(request):
+    context = {'check':False}
+    if request.session.get('access_token'): #만약 세션에 access_token이 있으면(==로그인 되어 있으면) 
+        context['check'] = True #check 가 true, check는 kakaologin.html내에서 if문의 인자
+    return render(request,"myapp/kakaologin.html",context)
+
+def kakaoLoginLogic(request):
+    _restApiKey = '7357a0ebc5b601b560b1475e76d898de' # 입력필요
+    _redirectUrl = 'http://127.0.0.1:8000/kakaoLoginLogicRedirect'
+    _url = f'https://kauth.kakao.com/oauth/authorize?client_id={_restApiKey}&redirect_uri={_redirectUrl}&response_type=code'
+    return redirect(_url)
+
+def kakaoLoginLogicRedirect(request):
+    _qs = request.GET['code']
+    _restApiKey = '7357a0ebc5b601b560b1475e76d898de' # 입력필요
+    _redirect_uri = 'http://127.0.0.1:8000/kakaoLoginLogicRedirect'
+    _url = f'https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={_restApiKey}&redirect_uri={_redirect_uri}&code={_qs}'
+    _res = requests.post(_url)
+    _result = _res.json()
+    
+    request.session['access_token'] = _result['access_token']
+    request.session.modified = True
+    return render(request, 'myapp/loginsuccess.html')
+
+def kakaoLogout(request):
+    _token = request.session['access_token']
+    _url = 'https://kapi.kakao.com/v1/user/logout'
+    _header = {
+      'Authorization': f'bearer {_token}'
+    }
+    # _url = 'https://kapi.kakao.com/v1/user/unlink'
+    # _header = {
+    #   'Authorization': f'bearer {_token}',
+    # }
+    _res = requests.post(_url, headers=_header)
+    _result = _res.json()
+    if _result.get('id'):
+        del request.session['access_token']
+        return render(request, 'myapp/loginoutsuccess.html')
+    else:
+        return render(request, 'myapp/logouterror.html')
+
+
 
 
 def home(request):
@@ -29,7 +77,7 @@ def meeting(request):
         q.save()
         count = q.id
         print(count)
-        return redirect("/home/meeting2")# /home/meeting2로 페이지 전달
+        return redirect("/meeting2")# /home/meeting2로 페이지 전달
     return render(request, "myapp/meeting.html")
 
 
@@ -122,21 +170,11 @@ def you(request):
     context = {"article":article}
     return render(request, "myapp/you.html", context)
 
-def kakaologin(request):
-    return render(request, 'myapp/kakaologin.html')
-
 
 def choose(request):
 
     return render(request, "myapp/choose.html")
       
-def oauth(request):
-   
-    article = 'login success'
-    context = {"article":article} 
-
-    return render(request, "myapp/index.html", context)
-
 def matching(request):
     article = 'matching'
     context = {"article":article}

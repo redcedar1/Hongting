@@ -5,35 +5,27 @@
   <main class="KakaoLogin">
 
     <body>
-      <br><br>
-      <h2>홍팅 사용을 위해
-        <br>카카오톡으로 간편하게 로그인 해주세요</h2>
-      <br><br>
-      <div id="Login">
-        <div class="box1" onclick="LoginFun();">
-          카카오톡으로<br>로그인
+
+      {% if check %}
+        <!--로그인 되어 있으면-->
+        <div>
+          <!--<br><br> <h1>카카오 로그아웃</h1> <form action="/kakaoLogout" method="GET"> <input type="submit" value="카카오로그아웃 및 연결 끊기"/> </form>-->
+          <br><br><br><br>로그인 되어 있습니다
         </div>
-        <div class="box2" onclick="JoinFun();">
-          카카오톡으로<br>회원가입
+      {% else %}
+        <!--로그인 안되어 있으면 -->
+        <br><br>
+        <h2>홍팅 사용을 위해
+          <br>카카오톡으로 간편하게 로그인 해주세요</h2>
+        <br><br>
+        <div>
+          <h1>카카오 로그인</h1>
+          <form action="/kakaoLoginLogic" method="GET">
+            <input type="submit" value="카카오로그인"/>
+          </form>
         </div>
+      {% endif %}
+    </body>
+  </main>
 
-        <script>
-          function LoginFun() {
-            /* 로그인 api 사용해(함수) 로그인 하고 리턴값 받기 */
-            if (/* 자기소개 없으면 */
-            false) {
-              location.href = 'My.html';
-            } else {
-              location.href = 'home.html';
-            }
-          }
-
-          function JoinFun() {
-            /* 카톡 api 사용해(함수) 회원가입 하고 리턴값 받기 */
-            LoginFun();
-          }
-        </script>
-      </body>
-    </main>
-
-  </html>
+</html>

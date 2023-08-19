@@ -3,7 +3,12 @@ from django.contrib import admin
 from django.urls import path, include
 from myapp import views
 urlpatterns = [
-    path('',views.index, name= 'index'),
+    path('',views.index),
+
+    path('kakaoLoginLogic/', views.kakaoLoginLogic),
+    path('kakaoLoginLogicRedirect/', views.kakaoLoginLogicRedirect),
+    path('kakaoLogout/', views.kakaoLogout), 
+
     path('home/',views.home, name='home'),
     path('matching/',views.matching,name='matching'),
     path('result/',views.result,name='result'),
@@ -26,10 +31,4 @@ urlpatterns = [
     path('myinfo/',views.myinfo,name='myinfo'),
     path('success/',views.success,name='success'),
     path('youinfo/',views.youinfo,name='youinfo')
-
-    
-    
-
-    
-    
 ]
