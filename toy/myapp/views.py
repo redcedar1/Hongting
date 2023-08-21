@@ -11,34 +11,40 @@ from django.http import HttpResponse, JsonResponse
 count = 0
 
 def index(request):
-    return render(request, 'myapp/index.html')
+   return render(request, 'myapp/index.html')
+
 
 
 def kakaologin(request):
     context = {'check':False}
-    if request.session.get('access_token'): #만약 세션에 access_token이 있으면(==로그인 되어 있으면) 
+    if request.session.get('access_token'): #만약 세션에 access_token이 있으면(==로그인 되어 있으면)
         context['check'] = True #check 가 true, check는 kakaologin.html내에서 if문의 인자
+
     return render(request,"myapp/kakaologin.html",context)
 
 def kakaoLoginLogic(request):
-    _restApiKey = '7357a0ebc5b601b560b1475e76d898de' # 입력필요
+    _restApiKey = '60010e5242c371826d538b43def648c3' # 입력필요
     _redirectUrl = 'http://127.0.0.1:8000/kakaoLoginLogicRedirect'
     _url = f'https://kauth.kakao.com/oauth/authorize?client_id={_restApiKey}&redirect_uri={_redirectUrl}&response_type=code'
     return redirect(_url)
 
 def kakaoLoginLogicRedirect(request):
     _qs = request.GET['code']
-    _restApiKey = '7357a0ebc5b601b560b1475e76d898de' # 입력필요
+    _restApiKey = '60010e5242c371826d538b43def648c3' # 입력필요
     _redirect_uri = 'http://127.0.0.1:8000/kakaoLoginLogicRedirect'
     _url = f'https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={_restApiKey}&redirect_uri={_redirect_uri}&code={_qs}'
     _res = requests.post(_url)
     _result = _res.json()
-    
+    print()
+    print(_result)
+    print()
     request.session['access_token'] = _result['access_token']
     request.session.modified = True
+    
     return render(request, 'myapp/loginsuccess.html')
 
 def kakaoLogout(request):
+    
     _token = request.session['access_token']
     _url = 'https://kapi.kakao.com/v1/user/logout'
     _header = {
@@ -50,12 +56,14 @@ def kakaoLogout(request):
     # }
     _res = requests.post(_url, headers=_header)
     _result = _res.json()
+    
+    print(_result.get('id'))#액세스 토큰은 바뀌어도 id값은 안바뀌니 이것으로 조회 가능
     if _result.get('id'):
+        
         del request.session['access_token']
         return render(request, 'myapp/loginoutsuccess.html')
     else:
         return render(request, 'myapp/logouterror.html')
-
 
 
 
@@ -145,6 +153,8 @@ def myinfo(request):
     email = account_info.get("kakao_account", {}).get("email") # email이 있으면 email반환 없으면 빈칸 반환
     nickname = account_info.get("kakao_account", {}).get("nickname")
     context = {'email' : email, 'nickname':nickname}
+    print(email)
+    print(nickname)
     return render(request, "myapp/myinfo.html",context)
 
 def success(request):

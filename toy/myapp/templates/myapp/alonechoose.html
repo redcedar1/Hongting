@@ -2,19 +2,31 @@
 <html lang="ko">{% load static %}
   <link rel="stylesheet" href="{% static 'myapp/css/alonechoose.css' %}">
   {% include 'myapp/index.html' %}
+  <script src="{% static 'myapp/js/Function.js' %}"></script>
   <main class="AloneChoose">
 
     <body>
-      <script src="{% static 'myapp/js/Function.js' %}"></script>
+      <script src="Function.js"></script>
       <br><br>
       <p>상대방의 원하는 필수조건을 기입해주세요!</p>
       <form id="YouForm">
         <fieldset>
           <ul>
             <li id="form1">
-              <script>
-                ageLevel();
-              </script>
+              <form class="box">
+                <div class="slider">
+                  <input type="range" id="input-left" min="1" max="100" value="1" oninput="document.getElementById('output1').innerHTML=this.value;"/>
+                  <input type="range" id="input-right" min="1" max="100" value="100" oninput="document.getElementById('output2').innerHTML=this.value;"/>
+                  <div class="track">
+                    <div class="range"></div>
+                    <div class="thumb left"></div>
+                    <div class="thumb right"></div>
+                  </div>
+                </div>
+                <span id="output1"></span>
+                <span>~</span>
+                <span id="output2"></span>
+              </form>
             </li>
             <br><br>
             <li id="form2">
@@ -34,8 +46,49 @@
 
           function ageSubmit() {
             form.submit();
-            location.href = "/alonechoose2/";
+            location.href = '/AloneChoose2/';
           }
+        </script>
+        <script>
+          const inputLeft = document.getElementById("input-left");
+          const inputRight = document.getElementById("input-right");
+
+          const thumbLeft = document.querySelector(".thumb.left");
+          const thumbRight = document.querySelector(".thumb.right");
+
+          const range = document.querySelector(".range");
+
+          const setLeftValue = e => {
+            const _this = e.target;
+            const {value, min, max} = _this;
+
+            if (+ inputRight.value - + value < 10) {
+              _this.value = + inputRight.value - 20;
+            }
+            const percent = ((+ _this.value - + min) / (+ max - + min)) * 100;
+
+            thumbLeft.style.left = `${percent}%`;
+            range.style.left = `${percent}%`;
+          };
+
+          const setRightValue = e => {
+            const _this = e.target;
+            const {value, min, max} = _this;
+
+            if (+ value - + inputLeft.value < 10) {
+              _this.value = + inputLeft.value + 20;
+            }
+
+            const percent = ((+ _this.value - + min) / (+ max - + min)) * 100;
+
+            thumbRight.style.right = `${ 100 - percent}%`;
+            range.style.right = `${ 100 - percent}%`;
+          };
+
+          if (inputLeft && inputRight) {
+            inputLeft.addEventListener("input", setLeftValue);
+            inputRight.addEventListener("input", setRightValue);
+          };
         </script>
       </body>
     </main>

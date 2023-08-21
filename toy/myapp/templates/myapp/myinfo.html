@@ -2,7 +2,7 @@
 <html lang="ko">{% load static %}
   <link rel="stylesheet" href="{% static 'myapp/css/myinfo.css' %}">
   {% include 'myapp/index.html' %}
-  <main class="MyInfo">
+  <main class="YouInfo">
 
     <body>
       <br><br>
@@ -10,7 +10,9 @@
       <br><br>
       <div id="Info">
         <p>나이:
+          <!-- user1.age -->
         </p>
+        <!-- 이런 식으로 백에서 데이터 받아와서 출력 -->
         <p>미팅 인원수:
         </p>
         <p>직업:
@@ -38,5 +40,7 @@
       </div>
     </body>
   </main>
+
+</html>
 
 </html>
