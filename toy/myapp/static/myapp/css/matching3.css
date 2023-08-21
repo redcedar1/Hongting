@@ -1,0 +1,71 @@
+#matching {
+                    display: grid;
+                    grid-template-columns: repeat(8, 1fr);
+                    grid-template-rows: repeat(3, 1fr);
+                    grid-column-gap: 30px;
+                    grid-row-gap: 20px;
+                }
+                .box1 {
+                    grid-column: 4/6;
+                    grid-row: 2;
+                    display: inline-block;
+                    text-align: center;
+                }
+                .box2 {
+                    grid-column: 2/8;
+                    grid-row: 3;
+                    display: inline-block;
+                    text-align: center;
+                }
+                #box3 {
+                    grid-column: 3/7;
+                    grid-row: 4;
+                    display: inline-block;
+                    border-radius: 25%;
+                    background-color: pink;
+                    text-align: center;
+                    opacity: 0;
+                }
+                #box4 {
+                    grid-column: 3/7;
+                    grid-row: 4;
+                    display: inline-block;
+                    text-align: center;
+                    opacity: 0;
+                }
+                #box5 {
+                    grid-column: 1/5;
+                    grid-row: 6;
+                    display: inline-block;
+                    border-radius: 25%;
+                    background-color: pink;
+                    text-align: center;
+                    opacity: 0;
+                }
+                #box6 {
+                    grid-column: 5/9;
+                    grid-row: 6;
+                    display: inline-block;
+                    border-radius: 25%;
+                    background-color: pink;
+                    text-align: center;
+                    opacity: 0;
+                }
+                #box7 {
+                    grid-column: 1/5;
+                    grid-row: 6;
+                    display: inline-block;
+                    border-radius: 25%;
+                    background-color: pink;
+                    text-align: center;
+                    opacity: 0;
+                }
+                #box8 {
+                    grid-column: 5/9;
+                    grid-row: 6;
+                    display: inline-block;
+                    border-radius: 25%;
+                    background-color: pink;
+                    text-align: center;
+                    opacity: 0;
+                }

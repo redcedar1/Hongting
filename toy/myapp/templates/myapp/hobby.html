@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">{% load static %}
+  <link rel="stylesheet" href="{% static 'myapp/css/hobby.css' %}">
+  {% include 'myapp/index.html' %}
+  <main class="AloneChoose2">
+    <body>
+        <script src="Function.js"></script>
+        <br><br>
+        <p>관심사를 선택해주세요</p>
+        
+        <form id="Choose">
+            <label> <input type=checkbox> 운동 </label>
+            <label> <input type=checkbox> 산책 </label>
+            <label> <input type=checkbox> 공연관람 </label>
+            <label> <input type=checkbox> 쇼핑 </label>
+            <label> <input type=checkbox> 재태크 </label>
+            <label> <input type=checkbox> 패션 </label>
+            <label> <input type=checkbox> 반려동물 </label>
+            <label> <input type=checkbox> 음악감상 </label>
+            <label> <input type=checkbox> 독서 </label>
+            <label> <input type=checkbox> 여행 </label>
+            <label> <input type=checkbox> 카페 </label>
+            <label> <input type=checkbox> 게임 </label>
+            <label> <input type=checkbox> 영화/드라마 </label>
+            <label> <input type=checkbox> 전시관람 </label>
+            <label> <input type=checkbox> 연극/뮤지컬 </label>
+            <label> <input type=checkbox> 술 </label>
+            <label> <input type=checkbox> 악기연주 </label>
+            <label> <input type=checkbox> 맛집 </label>
+            <label> <input type=checkbox> 요리 </label>
+
+        </form>
+            <br>
+            <div id="button">
+                <button type="button" onclick="ageSubmit();"> 제출
+            </div>
+            <script>
+                const form = document.getElementById("Choose");
+                function ageSubmit() {
+                    form.submit();
+                    location.href='AloneChoose2.html';
+                }
+            </script>
+    </body>
+</main>
+</html>
