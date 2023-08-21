@@ -6,7 +6,7 @@ function createStr() {
     else if(/*대학생이면*/ false) document.write("학교와 학과"); //학교 인증 시스템 넣기
     else if(/*mbti*/ false) document.write("mbti");
     else if(/*남자면*/ false) document.write("군/미필");
-    else if(/*키*/ false) document.write("키"); //범위로(5단위)
+    else if(/*키*/ true) document.write("키"); //범위로(5단위)
     else if(/*체형*/ false) document.write("체형"); //탭으로(마름, 보통, 통통, 근육)
     else if(/*유/무쌍*/ false) document.write("유/무쌍"); //탭으로
     else if(/*얼굴상*/ false) document.write("얼굴상"); //뚜렷, 두부
@@ -16,7 +16,8 @@ function createStr() {
         document.write("최소 10자의 자기소개를 적어주세요.<br>");
         document.write("자기소개를 길게 쓸수록 <br> 매칭확률이 높아집니다.");
     }
-} 
+}
+
 function create() {
     const elem= document.getElementById("form");
     if(/*나이값 없으면*/ false) {
@@ -38,7 +39,7 @@ function create() {
                  <input type=radio name=job id=3 value=취준생 > <label for = 3> 취준생 </label> \
                  <input type=radio name=job id=4 value=직장인 > <label for = 4> 직장인 </label> "
     }
-    else if(/*대학생이면*/ true) {
+    else if(/*대학생이면*/ false) {
         elem.innerHTML = "<input type=text placeholder=학교 size=10 required></input>\
         <br><br>\
         <input type=radio id=1 name=major value=문과대 > <label for = 1> 문과대 </label>\
@@ -59,19 +60,8 @@ function create() {
                 <input type=radio id=2 name=army value=미필 required> <label for=2> 미필 </label>"
     }
     else if(/*키*/ true) {
-        elem.innerHTML = "\
-        <form class=box> \
-            <div class=slider>\
-              <input type=range id=input-left min=1 max=100 value=1 oninput=document.getElementById('output1').innerHTML=this.value;/> \
-              <input type=range id=input-right min=1 max=100 value=100 oninput=document.getElementById('output2').innerHTML=this.value;/> \
-              <div class=track>\
-                <div class=range></div>\
-                <div class=thumb left></div>\
-                <div class=thumb right></div>\
-              </div>\
-            </div>\
-            <span id=output1></span> <span>~</span> <span id=output2></span>\
-        </form>"
+        elem.innerHTML = "<input type=range name=age min=2 max=30 oninput=document.getElementById('output1').innerHTML=this.value;>"
+        
     }
     else if(/*체형*/ false) {
         elem.innerHTML = "<input type=radio id=1 name=body value=마름 > <label for = 1> 마름 </label> \

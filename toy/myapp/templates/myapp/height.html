@@ -35,3 +35,91 @@
     </body>
 </main>
 </html>
+
+<!--
+.slider {
+margin:0%;
+height: 100%;
+/* 후에 padding: 1.5rem 2rem 으로 수정합니다. 참고바랍니다. */
+padding: 1.5rem 2rem;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items: center;
+position: relative;
+}
+
+/* input {
+width: calc(100% - 1rem);
+top: 1rem;
+position: absolute;
+border: none;
+pointer-events: none;
+z-index: 10;
+appearance: none;
+opacity: 0.5;
+} */
+
+input::-webkit-slider-thumb {
+pointer-events: all;
+/* appearance, background-color는 지워도 됨 */
+appearance:none;
+background-color: #6200ee;
+width: 2.5rem;
+height: 1.5rem;
+}
+input:first-child {
+top: 1rem;
+}
+
+.track {
+position: relative;
+width: 100%;
+height: 0.5rem;
+background-color: #c6aee7;
+border-radius: 0.5rem;
+}
+
+.range {
+position: absolute;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+background-color: #6200ee;
+border-radius: 0.5rem;
+}
+
+.thumb {
+position: absolute;
+top: 0;
+transform: translateY(-0.25rem);
+width: 1rem;
+height: 1rem;
+background-color: #6200ee;
+border-radius: 50%;
+}
+
+.left {
+left: 0;
+}
+
+.right {
+right: 0;
+}-->
+<script>
+    /*
+    <form class=box> \
+        <div class=slider>\
+          <input type=range id=input-left min=1 max=100 value=1 oninput=document.getElementById('output1').innerHTML=this.value;/> \
+          <input type=range id=input-right min=1 max=100 value=100 oninput=document.getElementById('output2').innerHTML=this.value;/> \
+          <div class=track>\
+            <div class=range></div>\
+            <div class=thumb left></div>\
+            <div class=thumb right></div>\
+          </div>\
+        </div>\
+        <span id=output1></span> <span>~</span> <span id=output2></span>\
+    </form>"
+    */
+</script>
