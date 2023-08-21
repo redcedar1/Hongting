@@ -140,8 +140,12 @@ def mbti(request):
     return render(request, "myapp/mbti.html")
 
 def myinfo(request):
-
-    return render(request, "myapp/myinfo.html")
+    access_token = request.session.get("access_token")
+    account_info = requests.get("https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"}).json()
+    email = account_info.get("kakao_account", {}).get("email") # email이 있으면 email반환 없으면 빈칸 반환
+    nickname = account_info.get("kakao_account", {}).get("nickname")
+    context = {'email' : email, 'nickname':nickname}
+    return render(request, "myapp/myinfo.html",context)
 
 def success(request):
 
