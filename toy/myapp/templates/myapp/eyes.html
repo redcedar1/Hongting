@@ -3,28 +3,44 @@
   <link rel="stylesheet" href="{% static 'myapp/css/eyes.css' %}">
   {% include 'myapp/index.html' %}
   <main class="AloneChoose2">
+
     <body>
-        <script src="Function.js"></script>
-        <br><br>
-        <p>유/무쌍과 얼굴상을 선택해주세요</p>
-        
-        <form id="Choose">
-            <label> <input type=checkbox value=유쌍 > 유쌍 </label>
-            <label> <input type=checkbox value=무쌍> 뮤쌍 </label>
-            <br>
-            <label> <input type=checkbox value=뚜렷 > 뚜렷 </label>
-            <label> <input type=checkbox value=두부> 두부 </label>
-            <div id="button">
-                <button type="button" onclick="ageSubmit();"> 제출
-            </div>
+      <script src="{% static 'myapp/js/Function.js' %}"></script>
+      <br><br>
+      <p>유/무쌍과 얼굴상을 선택해주세요</p>
+
+      <form id="Choose">
+        <label>
+          <input type="checkbox" value="유쌍">
+          유쌍
+        </label>
+        <label>
+          <input type="checkbox" value="무쌍">
+          뮤쌍
+        </label>
+        <br>
+        <label>
+          <input type="checkbox" value="뚜렷">
+          뚜렷
+        </label>
+        <label>
+          <input type="checkbox" value="두부">
+          두부
+        </label>
+        <div id="button">
+          <button type="button" onclick="ageSubmit();">
+            제출
+          </div>
         </form>
-            <script>
-                const form = document.getElementById("Choose");
-                function ageSubmit() {
-                    form.submit();
-                    location.href='AloneChoose2.html';
-                }
-            </script>
-    </body>
-</main>
-</html>
+        <script>
+          const form = document.getElementById("Choose");
+
+          function ageSubmit() {
+            form.submit();
+            location.href = '/alonechoose2/';
+          }
+        </script>
+      </body>
+    </main>
+
+  </html>

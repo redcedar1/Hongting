@@ -1,92 +1,173 @@
 <!DOCTYPE html>
 <html lang="ko">{% load static %}
-  
+
   <link rel="stylesheet" href="{% static 'myapp/css/matching.css' %}">
   {% include 'myapp/index.html' %}
-  
-  <script>
-            function changeDay() {
-                if(/*day==1*/ false) document.write("<b>1일차</b>")
-                else if(/*day==2*/ false) document.write("<b>2일차</b>")
-                else document.write("<b>매칭을 신청해주세요!</b>")
-            }
-            function matchingResult() {
-                if(/*day==1*/ false) document.write("<b> ♥매칭이 진행중입니다♥ </b>")
-                else if(/*result=success*/ true) document.write("<b> ♥매칭이 성사되었습니다!♥ </b>")
-                else if(/*result=fail*/ false) document.write("<b> 매칭이 성사되지 않았습니다 </b>")
-                else document.write("")
-            }
-            function check() {
-                if(/*result=success*/ true) {
-                    document.getElementById("box3").style.opacity = 1;
-                    document.getElementById("box4").style.opacity = 0;
-                }
-                else if(/*result=fail*/ false) {
-                    document.getElementById("box3").style.opacity = 0;
-                    document.getElementById("box4").style.opacity = 1;
-                }
-                else document.write("")
-            }
-            function meetCheck() {
-                if(/*result=success*/ true) {
-                    document.getElementById("box5").style.opacity = 1;
-                    document.getElementById("box6").style.opacity = 1;
-                    document.getElementById("box7").style.opacity = 0;
-                    document.getElementById("box8").style.opacity = 0;
-                }
-                else if(/*result=fail*/ true) {
-                    document.getElementById("box5").style.opacity = 0;
-                    document.getElementById("box6").style.opacity = 0;
-                    document.getElementById("box7").style.opacity = 1;
-                    document.getElementById("box8").style.opacity = 1;
-                }
-            }
-        </script>
-<main class="MatchingContent">
-        <body>
-            <div id="matching">
-                <div class="box1">
-                    <br><br>
-                    <script> changeDay(); </script>
-                </div>
-                <div class="box2">
-                    <script> matchingResult();</script>
-                </div>
-                <div id="box3">
-                    <p><strong>상대정보확인</strong></p>
-                </div>
-                <div id="box4" onclick="goInfo();"> <!-- 얘도 버튼 이상 -->
-                    <p><b> 우선순위를 폭넓게 설정하면<br>매칭확률이 높아져요 </b></p>
-                </div>
-                <div id="box5" onclick="Home();"> <!-- 버튼이 box7과 반대로 눌려서 함수 둘이 바꿈 -->
-                    <p><strong>만나볼래요!</strong></p>  <!-- 카톡 아이디 알려주는 창으로 -->
-                </div>
-                <div id="box6" onclick="/* 백에서 리턴값 fail로 바꿔주고 아님 여기서 바로 값 바꾸고*/ meetCheck()">
-                    <p><strong>다음에 만날래요</strong></p> 
-                </div>
-                <div id="box7" onclick="go();">
-                    <p><strong>매칭 재진행</strong></p>
-                </div>
-                <div id="box8" onclick="/*매칭 멈추기 상태 함수(백엔드)*/">
-                    <p><strong>매칭 멈추기</strong></p>
-                </div>
 
-                <script> check(); </script>
-                <script> meetCheck(); </script>
-            </div>
-            <script>
-                function go() {
-                    /* 백에 매칭 동의 누른 거 전달되게 하고 시간안에 비동의 안 하면 자동 동의 되게*/
-                    location.href ='Success.html';
-                }
-                function Home() {
-                    location.href ='home.html';
-                }
-                function goInfo() {
-                    location.href ='YouInfo.html';
-                }
-            </script>
-        </body>
-    </main>
-   
+  <script>
+    function changeDay() {
+      if (/* day==1 */
+      false) 
+        document.write("<b>1일차</b>")
+      else if (/* day==2 */
+      false) 
+        document.write("<b>2일차</b>")
+      else 
+        document.write("<b>매칭을 신청해주세요!</b>")
+    }
+
+    function matchingResult() {
+      if (/* day==1 */
+      false) 
+        document.write("<b> ♥매칭이 진행중입니다♥ </b>")
+      else if (/* result=success */
+      true) 
+        document.write("<b> ♥매칭이 성사되었습니다!♥ </b>")
+      else if (/* result=fail */
+      false) 
+        document.write("<b> 매칭이 성사되지 않았습니다 </b>")
+      else 
+        document.write("")
+    }
+
+    function check() {
+      if (/* result=success */
+      true) {
+        document
+          .getElementById("box3")
+          .style
+          .opacity = 1;
+        document
+          .getElementById("box4")
+          .style
+          .opacity = 0;
+      } else if (/* result=fail */
+      false) {
+        document
+          .getElementById("box3")
+          .style
+          .opacity = 0;
+        document
+          .getElementById("box4")
+          .style
+          .opacity = 1;
+      } else 
+        document.write("")
+    }
+
+    function meetCheck() {
+      if (/* result=success */
+      true) {
+        document
+          .getElementById("box5")
+          .style
+          .opacity = 1;
+        document
+          .getElementById("box6")
+          .style
+          .opacity = 1;
+        document
+          .getElementById("box7")
+          .style
+          .opacity = 0;
+        document
+          .getElementById("box8")
+          .style
+          .opacity = 0;
+      } else if (/* result=fail */
+      true) {
+        document
+          .getElementById("box5")
+          .style
+          .opacity = 0;
+        document
+          .getElementById("box6")
+          .style
+          .opacity = 0;
+        document
+          .getElementById("box7")
+          .style
+          .opacity = 1;
+        document
+          .getElementById("box8")
+          .style
+          .opacity = 1;
+      }
+    }
+  </script>
+  <main class="MatchingContent">
+
+    <body>
+      <div id="matching">
+        <div class="box1">
+          <br><br>
+          <script>
+            changeDay();
+          </script>
+        </div>
+        <div class="box2">
+          <script>
+            matchingResult();
+          </script>
+        </div>
+        <div id="box3">
+          <p>
+            <strong>상대정보확인</strong>
+          </p>
+        </div>
+        <div id="box4" onclick="goInfo();">
+          <!-- 얘도 버튼 이상 -->
+          <p>
+            <b>
+              우선순위를 폭넓게 설정하면<br>매칭확률이 높아져요
+            </b>
+          </p>
+        </div>
+        <div id="box5" onclick="Home();">
+          <!-- 버튼이 box7과 반대로 눌려서 함수 둘이 바꿈 -->
+          <p>
+            <strong>만나볼래요!</strong>
+          </p>
+          <!-- 카톡 아이디 알려주는 창으로 -->
+        </div>
+        <div id="box6" onclick="/* 백에서 리턴값 fail로 바꿔주고 아님 여기서 바로 값 바꾸고*/ meetCheck()">
+          <p>
+            <strong>다음에 만날래요</strong>
+          </p>
+        </div>
+        <div id="box7" onclick="go();">
+          <p>
+            <strong>매칭 재진행</strong>
+          </p>
+        </div>
+        <div id="box8" onclick="/*매칭 멈추기 상태 함수(백엔드)*/">
+          <p>
+            <strong>매칭 멈추기</strong>
+          </p>
+        </div>
+
+        <script>
+          check();
+        </script>
+        <script>
+          meetCheck();
+        </script>
+      </div>
+      <script>
+        function go() {
+          /* 백에 매칭 동의 누른 거 전달되게 하고 시간안에 비동의 안 하면 자동 동의 되게 */
+          location.href = '/success/';
+        }
+
+        function Home() {
+          location.href = '/home/';
+        }
+
+        function goInfo() {
+          location.href = '/youinfo/';
+        }
+      </script>
+    </body>
+  </main>
+
 </html>
