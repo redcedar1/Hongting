@@ -6,40 +6,45 @@
   <main class="AloneChoose">
 
     <body>
-      <script src="Function.js"></script>
       <br><br>
       <p>상대방의 원하는 필수조건을 기입해주세요!</p>
       <form id="YouForm">
-        <fieldset>
-          <ul>
-            <li id="form1">
+        <p>나이</p>
               <form class="box">
                 <div class="slider">
-                  <input type="range" id="input-left" min="1" max="100" value="1" oninput="document.getElementById('output1').innerHTML=this.value;"/>
-                  <input type="range" id="input-right" min="1" max="100" value="100" oninput="document.getElementById('output2').innerHTML=this.value;"/>
+                  <input type="range" name="agemin" id="input-left" min="1" max="100" value="1" oninput="document.getElementById('output1').innerHTML=this.value;"/>
+                  <input type="range" name="agemax" id="input-right" min="1" max="100" value="100" oninput="document.getElementById('output2').innerHTML=this.value;"/>
                   <div class="track">
                     <div class="range"></div>
                     <div class="thumb left"></div>
                     <div class="thumb right"></div>
                   </div>
                 </div>
-                <span id="output1"></span>
-                <span>~</span>
-                <span id="output2"></span>
+                <span id="output1"></span> <span>~</span> <span id="output2"></span>
               </form>
-            </li>
-            <br><br>
-            <li id="form2">
-              <script>
-                job();
-              </script>
-              <div id="button">
-                <button type="button" onclick="ageSubmit();">
-                  제출
-                </div>
-              </li>
+            <ul>
+              <input type="checkbox" id="ch1" name="job" value="univstu">
+            <label for="ch1">
+              대학생
+            </label>
+            <input type="checkbox" id="ch2" name="job" value="gradustu">
+            <label for="ch2">
+              대학원생
+            </label>
+            <input type="checkbox" id="ch3" name="job" value="human">
+            <label for="ch3">
+              취준생
+            </label>
+            <input type="checkbox" id="ch4" name="job" value="worker">
+            <label for="ch4">
+              직장인
+            </label>
             </ul>
-          </fieldset>
+            <br>
+            <div id="button">
+              <button type="button" onclick="ageSubmit();">
+                제출
+              </div>
         </form>
         <script>
           const form = document.getElementById("YouForm");

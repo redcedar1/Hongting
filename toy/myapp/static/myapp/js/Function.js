@@ -107,33 +107,9 @@ function create() {
                 <input type=checkbox name=hobby id=19 value=4 > <label for = 19> 요리 </label>"
     }
     else if(count==13) {
-        elem.innerHTML = "<br> <textarea name=free id=input2 cols=40 rows=10> </textarea>"
+        elem.innerHTML = "<br> <textarea name=free id=input2 cols=40 rows=10> </textarea> \
+        <p> 제출하면 자기소개가 완료됩니다! </p>"
     }
-}
-
-function ageLevel() {
-    const elem= document.getElementById("form1");
-    elem.innerHTML = "<p>매칭하길 원하는 나이대를 선택해주세요(다수선택 가능)</p> \
-    <label> <input type=checkbox> 20살 \
-    <input type=checkbox> 21살 \
-    <input type=checkbox> 22살 \
-    <input type=checkbox> 23살 \
-    <input type=checkbox> 24살 \
-    <input type=checkbox> 25살 \
-    <input type=checkbox> 26살 \
-    <input type=checkbox> 27살 \
-    <input type=checkbox> 28살 \
-    <input type=checkbox> 29살 \
-     </label> "
-}
-
-function job() {
-    const elem= document.getElementById("form2");
-    elem.innerHTML = " <p>원하는 상대방의 직업을 선택해주세요(다수선택 가능)</p>\
-    <label> <input type=checkbox value=대학생 > 대학생 </label> \
-                <label> <input type=checkbox value=대학원생> 대학원생 </label> \
-                <label> <input type=checkbox value=취준생 > 취준생 </label> \
-                <label> <input type=checkbox value=직장인 > 직장인 </label> "
 }
 
 function major() {
