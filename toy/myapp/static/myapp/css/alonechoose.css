@@ -1,14 +1,18 @@
-
 p {
     text-align: center;
 }
-fieldset {
-    border: none;
+.box {
+    text-align: center;
+}
+ul {
     display: grid;
-    grid-template-columns: repeat(8, 4fr);
-    grid-template-rows: 30px;
+    place-items: center;
+    justify-content: center;
+    grid-template-columns: repeat(2, 80px);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 15px;
     margin:0%;
-    padding:0%;
+    padding: 0%;
 }
 #form1 {
     display: grid;
@@ -32,16 +36,39 @@ fieldset {
     border-bottom: 3px solid black;
     background-color: aliceblue;
 }
-button {
-    background-color: aliceblue;
-    border-radius: 25%;
-    border-color: aliceblue;
-}
-#button {
-    text-align: center;
-}
 p {
     font-size: larger;
+}
+label {
+    width: 70px;
+    height: 50px;
+    border: 5px solid rgb(249, 199, 207);
+    background-color: rgb(249, 199, 207);
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+    line-height: 50px;
+    margin: 10px
+}
+input[type="checkbox"]:checked + label {
+    border-color: rgb(246, 124, 144);
+    background-color: rgb(246, 124, 144);
+}
+input[type="checkbox"] {
+    display: none;
+}
+button {
+    background-color: white;
+    border-radius: 25%;
+    border-color: white;
+    border: none;
+    display: block;
+    padding: 10px 10px;
+    font-weight: 600;
+    font-size: large;
+    line-height: 15px;
+    grid-column: 1/2;
+    margin: auto;
 }
 .slider {
 margin:0%;

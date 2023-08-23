@@ -11,6 +11,9 @@ urlpatterns = [
 
     path('home/',views.home, name='home'),
     path('matching/',views.matching,name='matching'),
+    path('matching2/',views.matching2,name='matching2'),
+    path('matching3/',views.matching3,name='matching3'),
+    path('error/',views.error,name='error'), #08.22 새로만든 html
     path('result/',views.result,name='result'),
     path('menu/',views.menu,name='menu'),
     path('meeting/',views.meeting,name='meeting'),

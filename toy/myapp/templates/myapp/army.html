@@ -10,14 +10,11 @@
       <p>군/미필을 선택해주세요</p>
 
       <form id="Choose">
-        <label>
-          <input type="checkbox" value="군필">
-          군필
-        </label>
-        <label>
-          <input type="checkbox" value="미필">
-          미필
-        </label>
+        <ul>
+          <input type=radio id="1" name="army" value="go" > <label for = "1"> 군필 </label>
+          <input type=radio id="2" name="army" value="nongo" > <label for = "2"> 미필 </label>
+        </ul>
+        <br>
         <div id="button">
           <button type="button" onclick="ageSubmit();">
             제출

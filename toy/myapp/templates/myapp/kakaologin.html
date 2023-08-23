@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">{% load static %}
-  <link rel="stylesheet" href="{% static 'myapp/css/alonechoose.css' %}">
+  <link rel="stylesheet" href="{% static 'myapp/css/kakaologin.css' %}">
   {% include 'myapp/index.html' %}
   <main class="KakaoLogin">
 
@@ -22,7 +22,7 @@
         <div id="login">
           <form method="GET">
             <button type="submit" onclick=" form.action='/kakaoLoginLogic'">
-              <h2>카카오톡으로 로그인</h2>
+              <img src="/static/myapp/img/kakao_login_medium_narrow.png">
             </div>
           {% endif %}
         </body>

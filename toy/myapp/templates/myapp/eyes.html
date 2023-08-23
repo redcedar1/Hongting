@@ -10,23 +10,13 @@
       <p>유/무쌍과 얼굴상을 선택해주세요</p>
 
       <form id="Choose">
-        <label>
-          <input type="checkbox" value="유쌍">
-          유쌍
-        </label>
-        <label>
-          <input type="checkbox" value="무쌍">
-          뮤쌍
-        </label>
+        <ul> 
+        <input type="radio" id="1" name="eyes" value="유쌍" > <label for = "1"> 유쌍 </label>
+        <input type="radio" id="2" name="eyes" value="무쌍"> <label for = "2">  무쌍 </label>
+        <input type="radio" id="3" name="face" value="두부" > <label for = "3"> 두부상 </label>
+        <input type="radio" id="4" name="face" value="뚜렷"> <label for = "4"> 뚜렷상 </label>
+        </ul>
         <br>
-        <label>
-          <input type="checkbox" value="뚜렷">
-          뚜렷
-        </label>
-        <label>
-          <input type="checkbox" value="두부">
-          두부
-        </label>
         <div id="button">
           <button type="button" onclick="ageSubmit();">
             제출

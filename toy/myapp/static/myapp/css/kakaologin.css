@@ -3,28 +3,13 @@ h2 {
     text-align: center;
 
 }
-#login {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    grid-column-gap: 30px;
-    grid-row-gap: 50px;
-}
-.box1 {
-    grid-column: 1/4;
-    grid-row: 1/2;
-    display: inline-block;
-    background-color: pink;
-    border-radius: 25%;
-    text-align: center;
-    cursor : pointer;
-}
-.box2 {
-    grid-column: 1/4;
-    grid-row: 2/3;
-    display: inline-block;
-    background-color: pink;
-    border-radius: 25%;
-    text-align: center;
-    cursor : pointer;
+button {
+    margin: auto;
+    background-color:rgb(247, 229, 232);
+    border: none;
+    display: block;
+    padding: 10px 10px;
+    font-weight: 600;
+    font-size: large;
+    line-height: 15px;
 }

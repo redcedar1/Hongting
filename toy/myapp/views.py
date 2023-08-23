@@ -9,7 +9,7 @@ from django.http import HttpResponse, JsonResponse
 # Create your views here.
   
 count = 0
-
+@csrf_exempt
 def index(request):
    return render(request, 'myapp/index.html')
 
@@ -18,7 +18,7 @@ def index(request):
 def kakaologin(request):
     context = {'check':False}
     if request.session.get('access_token'): #만약 세션에 access_token이 있으면(==로그인 되어 있으면)
-        context['check'] = True #check 가 true, check는 kakaologin.html내에서 if문의 인자
+        return redirect("/meeting/") #check 가 true, check는 kakaologin.html내에서 if문의 인자
 
     return render(request,"myapp/kakaologin.html",context)
 
@@ -66,7 +66,7 @@ def kakaoLogout(request):
         return render(request, 'myapp/logouterror.html')
 
 
-
+@csrf_exempt
 def home(request):
     article = 'home is here'
     context = {"article":article}
@@ -78,7 +78,7 @@ def meeting(request):
     if request.method == "POST": # /home/meeting페이지로 인원 선택한 정보 전달
         peoplenum = ''
         peoplenum = request.POST.get('submit_peoplenum') #인원 선택 정보 추출
-        if peoplenum is None: #인원 값이 없으면
+        if peoplenum == '': #인원 값이 없으면
             errormsg = {"error_message": "인원을 선택하지 않으셨습니다."}
             return render(request, "myapp/meeting.html", errormsg)
         q = Info.objects.create(peoplenums=peoplenum)
@@ -96,6 +96,13 @@ def meeting2(request):
         job = request.POST.get('submit_job')
         location = request.POST.get('submit_location')
         age = request.POST.get('submit_age')
+        print(job)
+        print(location)
+        print(age)
+
+        if job == '' or location =='': #인원 값이 없으면
+            errormsg = {"error_message": "모든 필드에서 최소 한가지를 선택해 주세요."}
+            return render(request, "myapp/meeting2.html", errormsg)
 
         q = Info.objects.latest('id')
         q.jobs = job
@@ -106,47 +113,47 @@ def meeting2(request):
 
     count += 1
     return render(request, "myapp/meeting2.html")
-
+@csrf_exempt
 def alonechoose(request):
 
     return render(request, "myapp/alonechoose.html")
-
+@csrf_exempt
 def alonechoose2(request):
 
     return render(request, "myapp/alonechoose2.html")
-
+@csrf_exempt
 def army(request):
 
     return render(request, "myapp/army.html")
-
+@csrf_exempt
 def body(request):
 
     return render(request, "myapp/body.html")
-
+@csrf_exempt
 def eyes(request):
 
     return render(request, "myapp/eyes.html")
-
+@csrf_exempt
 def height(request):
 
     return render(request, "myapp/height.html")
-
+@csrf_exempt
 def hobby(request):
 
     return render(request, "myapp/hobby.html")
-
+@csrf_exempt
 def kakao(request):
 
     return render(request, "myapp/kakao.html")
-
+@csrf_exempt
 def major(request):
 
     return render(request, "myapp/major.html")
-
+@csrf_exempt
 def mbti(request):
 
     return render(request, "myapp/mbti.html")
-
+@csrf_exempt
 def myinfo(request):
     access_token = request.session.get("access_token")
     account_info = requests.get("https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"}).json()
@@ -156,16 +163,16 @@ def myinfo(request):
     print(email)
     print(nickname)
     return render(request, "myapp/myinfo.html",context)
-
+@csrf_exempt
 def success(request):
 
     return render(request, "myapp/success.html")
-
+@csrf_exempt
 def youinfo(request):
 
     return render(request, "myapp/youinfo.html")
 
-
+@csrf_exempt
 def my(request):
 
     return render(request, "myapp/my.html")
@@ -179,28 +186,42 @@ def my(request):
     return HttpResponse(template.render(context,request))
 
 '''
+@csrf_exempt
 def you(request):
     article = 'you'
     context = {"article":article}
     return render(request, "myapp/you.html", context)
 
-
+@csrf_exempt
 def choose(request):
 
     return render(request, "myapp/choose.html")
       
+@csrf_exempt
 def matching(request):
     article = 'matching'
     context = {"article":article}
     return render(request, "myapp/matching.html", context)
     
+@csrf_exempt
+def matching2(request):
 
+    return render(request, "myapp/matching2.html")
+@csrf_exempt
+def matching3(request):
+
+    return render(request, "myapp/matching3.html")
+@csrf_exempt
+def error(request):
+
+    return render(request, "myapp/error.html")
+@csrf_exempt
 def result(request):
     article = 'result'
     context = {"article":article}
     return render(request, "myapp/result.html", context)
     
-
+@csrf_exempt
 def menu(request):
     article = 'menu'
     context = {"article":article}

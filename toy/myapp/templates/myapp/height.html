@@ -10,46 +10,17 @@
       <p>원하는 키 범위를 선택해주세요</p>
       <br><br>
 
-      <form id="Choose">
-        <label>
-          <input type="checkbox" value="150미만">
-          150미만
-        </label>
-        <label>
-          <input type="checkbox" value="155">
-          150~155
-        </label>
-        <label>
-          <input type="checkbox" value="160">
-          155~160
-        </label>
-        <label>
-          <input type="checkbox" value="165">
-          160~165
-        </label>
-        <label>
-          <input type="checkbox" value="170">
-          165~170
-        </label>
-        <label>
-          <input type="checkbox" value="175">
-          170~175
-        </label>
-        <label>
-          <input type="checkbox" value="180">
-          175~180
-        </label>
-        <label>
-          <input type="checkbox" value="185">
-          180~185
-        </label>
-        <label>
-          <input type="checkbox" value="190">
-          185~190
-        </label>
-        <label>
-          <input type="checkbox" value="190이상">
-          190이상</label>
+      <form id="box">
+          <div class="slider">
+            <input type="range" name="minheight" id="input-left" min="1" max="100" value="1" oninput=document.getElementById('output1').innerHTML=this.value;>
+            <input type="range" name="maxheight" id="input-right" min="1" max="100" value="100" oninput=document.getElementById('output2').innerHTML=this.value;>
+            <div class="track">
+              <div class="range"></div>
+              <div class="thumb left"></div>
+              <div class="thumb right"></div>
+            </div>
+          </div>
+          <span id="output1"></span> <span>~</span> <span id="output2"></span>
       </form>
       <br>
       <div id="button">
@@ -63,6 +34,47 @@
             form.submit();
             location.href = '/alonechoose2/';
           }
+        </script>
+        <script>
+          const inputLeft = document.getElementById("input-left");
+          const inputRight = document.getElementById("input-right");
+
+          const thumbLeft = document.querySelector(".thumb.left");
+          const thumbRight = document.querySelector(".thumb.right");
+
+          const range = document.querySelector(".range");
+
+          const setLeftValue = e => {
+            const _this = e.target;
+            const {value, min, max} = _this;
+
+            if (+ inputRight.value - + value < 10) {
+              _this.value = + inputRight.value - 20;
+            }
+            const percent = ((+ _this.value - + min) / (+ max - + min)) * 100;
+
+            thumbLeft.style.left = `${percent}%`;
+            range.style.left = `${percent}%`;
+          };
+
+          const setRightValue = e => {
+            const _this = e.target;
+            const {value, min, max} = _this;
+
+            if (+ value - + inputLeft.value < 10) {
+              _this.value = + inputLeft.value + 20;
+            }
+
+            const percent = ((+ _this.value - + min) / (+ max - + min)) * 100;
+
+            thumbRight.style.right = `${ 100 - percent}%`;
+            range.style.right = `${ 100 - percent}%`;
+          };
+
+          if (inputLeft && inputRight) {
+            inputLeft.addEventListener("input", setLeftValue);
+            inputRight.addEventListener("input", setRightValue);
+          };
         </script>
       </body>
     </main>

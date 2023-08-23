@@ -45,9 +45,46 @@ button {
     justify-content: center;
 }
 #Choose {
+    place-items: center;
+    justify-content: center;
+}
+ul {
     display: grid;
     place-items: center;
     justify-content: center;
-    grid-template-columns: repeat(3, 70px);
-    grid-template-rows: repeat(3, 70px);
+    grid-template-columns: repeat(2, 80px);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 15px;
+    margin:0%;
+    padding: 0%;
+}
+label {
+    width: 70px;
+    height: 50px;
+    border: 5px solid rgb(249, 199, 207);
+    background-color: rgb(249, 199, 207);
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+    line-height: 50px;
+    margin: 5px;
+    text-align: center;
+}
+input[type="radio"]:checked + label {
+    border-color: rgb(246, 124, 144);
+    background-color: rgb(246, 124, 144);
+}
+input[type="radio"] {
+    display: none;
+}
+button {
+    background-color: white;
+    border-radius: 25%;
+    border-color: white;
+    border: none;
+    display: inline-block;
+    padding: 10px 10px;
+    font-weight: 600;
+    font-size: large;
+    line-height: 15px;
 }
