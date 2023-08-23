@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">{% load static %}
+  <link rel="stylesheet" href="{% static 'myapp/css/army.css' %}">
+  {% include 'myapp/index.html' %}
+  <main class="AloneChoose2">
+
+    <body>
+      <script src="{% static 'myapp/js/Function.js' %}"></script>
+      <br><br>
+      <p>군/미필을 선택해주세요</p>
+
+      <form id="Choose">
+        <label>
+          <input type="checkbox" value="군필">
+          군필
+        </label>
+        <label>
+          <input type="checkbox" value="미필">
+          미필
+        </label>
+        <div id="button">
+          <button type="button" onclick="ageSubmit();">
+            제출
+          </div>
+        </form>
+        <script>
+          const form = document.getElementById("Choose");
+
+          function ageSubmit() {
+            form.submit();
+            location.href = '/alonechoose2/';
+          }
+        </script>
+      </body>
+    </main>
+
+  </html>

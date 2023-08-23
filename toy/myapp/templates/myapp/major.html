@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">{% load static %}
+  <link rel="stylesheet" href="{% static 'myapp/css/major.css' %}">
+  {% include 'myapp/index.html' %}
+  <main class="AloneChoose2">
+
+    <body>
+      <script src="{% static 'myapp/js/Function.js' %}"></script>
+      <br><br>
+      <p>원하는 학과를 선택해주세요</p>
+      <br><br>
+
+      <form id="Choose">
+        <label>
+          <input type="checkbox" value="문과대">
+          문과대
+        </label>
+        <label>
+          <input type="checkbox" value="이과대">
+          이과대
+        </label>
+        <label>
+          <input type="checkbox" value="사범대">
+          사범대
+        </label>
+        <label>
+          <input type="checkbox" value="체대">
+          체대
+        </label>
+        <label>
+          <input type="checkbox" value="미대">
+          미대
+        </label>
+        <label>
+          <input type="checkbox" value="음대">
+          음대
+        </label>
+        <label>
+          <input type="checkbox" value="의대">
+          의대
+        </label>
+      </form>
+      <br>
+      <div id="button">
+        <button type="button" onclick="ageSubmit();">
+          제출
+        </div>
+        <script>
+          const form = document.getElementById("Choose");
+
+          function ageSubmit() {
+            form.submit();
+            location.href = '/alonechoose2/';
+          }
+        </script>
+      </body>
+    </main>
+
+  </html>
