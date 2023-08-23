@@ -10,23 +10,13 @@
       <p>원하는 체형을 선택해주세요</p>
 
       <form id="Choose">
-        <label>
-          <input type="checkbox" value="마름">
-          마름
-        </label>
-        <label>
-          <input type="checkbox" value="보통">
-          보통
-        </label>
+        <ul>
+          <input type=radio id="1" name="body" value="thin" > <label for = "1"> 마름 </label>
+          <input type=radio id="2" name="body" value="normal" > <label for = "2"> 보통 </label>
+          <input type=radio id="3" name="body" value="fat" > <label for = "3"> 통통 </label>
+          <input type=radio id="4" name="body" value="muscle" > <label for = "4"> 탄탄 </label>
+        </ul>
         <br>
-        <label>
-          <input type="checkbox" value="통통">
-          통통
-        </label>
-        <label>
-          <input type="checkbox" value="탄탄">
-          탄탄
-        </label>
         <div id="button">
           <button type="button" onclick="ageSubmit();">
             제출

@@ -8,24 +8,36 @@
     function changeDay() {
       if (/* day==1 */
       false) 
-        document.write("<b>1일차</b>")
+      document
+      .getElementById("inner1")
+      .innerHTML = "<b><font color='violet'>1일차</font></b>";
       else if (/* day==2 */
       false) 
-        document.write("<b>2일차</b>")
+      document
+      .getElementById("inner1")
+      .innerHTML = "<b><font color='violet'>2일차</font></b>";
       else 
-        document.write("<b>매칭을 신청해주세요!</b>")
+      document
+      .getElementById("inner1")
+      .innerHTML = "<b>매칭을<font color='violet'> 신청</font> 해주세요!</b>";
     }
 
     function matchingResult() {
       if (/* day==1 */
       false) 
-        document.write("<b> ♥매칭이 진행중입니다♥ </b>")
+      document
+      .getElementById("inner2")
+      .innerHTML = "<b>♥매칭이<font color='violet'> 진행</font> 중입니다♥</b>";
       else if (/* result=success */
       true) 
-        document.write("<b> ♥매칭이 성사되었습니다!♥ </b>")
+      document
+      .getElementById("inner2")
+      .innerHTML = "<b>♥매칭이<font color='violet'> 성사</font> 되었습니다♥</b>";
       else if (/* result=fail */
       false) 
-        document.write("<b> 매칭이 성사되지 않았습니다 </b>")
+      document
+      .getElementById("inner2")
+      .innerHTML = "<b>매칭이 성사되지 않았습니다</b>";
       else 
         document.write("")
     }
@@ -100,12 +112,14 @@
     <body>
       <div id="matching">
         <div class="box1">
-          <br><br>
+          <br>
+          <div id="inner1"></div>
           <script>
             changeDay();
           </script>
         </div>
         <div class="box2">
+          <div id="inner2"></div>
           <script>
             matchingResult();
           </script>

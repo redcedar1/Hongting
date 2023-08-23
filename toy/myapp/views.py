@@ -78,7 +78,7 @@ def meeting(request):
     if request.method == "POST": # /home/meeting페이지로 인원 선택한 정보 전달
         peoplenum = ''
         peoplenum = request.POST.get('submit_peoplenum') #인원 선택 정보 추출
-        if peoplenum is None: #인원 값이 없으면
+        if peoplenum == '': #인원 값이 없으면
             errormsg = {"error_message": "인원을 선택하지 않으셨습니다."}
             return render(request, "myapp/meeting.html", errormsg)
         q = Info.objects.create(peoplenums=peoplenum)
@@ -194,6 +194,17 @@ def matching(request):
     context = {"article":article}
     return render(request, "myapp/matching.html", context)
     
+def matching2(request):
+
+    return render(request, "myapp/matching2.html")
+
+def matching3(request):
+
+    return render(request, "myapp/matching3.html")
+
+def error(request):
+
+    return render(request, "myapp/error.html")
 
 def result(request):
     article = 'result'
