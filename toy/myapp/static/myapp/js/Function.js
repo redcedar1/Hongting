@@ -1,11 +1,136 @@
-var count=1;
 
-function count() {
-    count++;
-    if(count==14) location.href = '/choose/';
+function countAndUpdate(count) {
+        if (!validateInput(count)) {
+            alert("모든 필수 정보를 입력해주세요.");
+            return false;
+        }
+        updateFormSections(count);
+        return false;
 }
 
-function createStr() {
+function validateInput(count) {
+    if (count === 1) {
+        const ageInput = document.getElementById("input1");
+        if (ageInput.value === "") {
+            return false;
+        }
+    } else if (count === 2) {
+        const maleRadio = document.getElementById("1");
+        const femaleRadio = document.getElementById("2");
+        if (!maleRadio.checked && !femaleRadio.checked) {
+            return false;
+        }
+    } else if (count === 3) {
+        const peoplenumCheckboxes = document.querySelectorAll("[name='peoplenum']");
+        let selectedPeoplenum = false;
+        peoplenumCheckboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                selectedPeoplenum = true;
+            }
+        });
+        if (!selectedPeoplenum) {
+            return false;
+        }
+    } else if (count === 4) {
+        const jobRadios = document.querySelectorAll("[name='job']");
+        let selectedJob = false;
+        jobRadios.forEach(radio => {
+            if (radio.checked) {
+                selectedJob = true;
+            }
+        });
+        if (!selectedJob) {
+            return false;
+        }
+    } else if (count === 5) {
+        const schoolInput = document.querySelector("[name='school']");
+        const majorRadios = document.querySelectorAll("[name='major']");
+        let selectedMajor = false;
+        majorRadios.forEach(radio => {
+            if (radio.checked) {
+                selectedMajor = true;
+            }
+        });
+        if (schoolInput.value === "" || !selectedMajor) {
+            return false;
+        }
+    } else if (count === 6) {
+        const mbtiInput = document.querySelector("[name='mbti']");
+        if (mbtiInput.value === "") {
+            return false;
+        }
+    } else if (count === 7) {
+        const armyRadio = document.querySelector("[name='army']");
+        if (!armyRadio.checked) {
+            return false;
+        }
+    } else if (count === 8) {
+        const heightInput = document.getElementById("height");
+        if (heightInput.value === "") {
+            return false;
+        }
+    } else if (count === 9) {
+        const bodyRadios = document.querySelectorAll("[name='body']");
+        let selectedBody = false;
+        bodyRadios.forEach(radio => {
+            if (radio.checked) {
+                selectedBody = true;
+            }
+        });
+        if (!selectedBody) {
+            return false;
+        }
+    } else if (count === 10) {
+        const eyesRadios = document.querySelectorAll("[name='eyes']");
+        let selectedEyes = false;
+        eyesRadios.forEach(radio => {
+            if (radio.checked) {
+                selectedEyes = true;
+            }
+        });
+        if (!selectedEyes) {
+            return false;
+        }
+    } else if (count === 11) {
+        const faceRadios = document.querySelectorAll("[name='face']");
+        let selectedFace = false;
+        faceRadios.forEach(radio => {
+            if (radio.checked) {
+                selectedFace = true;
+            }
+        });
+        if (!selectedFace) {
+            return false;
+        }
+    } else if (count === 12) {
+        const hobbyCheckboxes = document.querySelectorAll("[name='hobby']");
+        let selectedHobby = false;
+        hobbyCheckboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                selectedHobby = true;
+            }
+        });
+        if (!selectedHobby) {
+            return false;
+        }
+    } else if (count === 13) {
+        const freeTextArea = document.getElementById("input2");
+        if (freeTextArea.value.length < 10) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+
+function updateFormSections() {
+    const elem = document.getElementById("form");
+    elem.innerHTML = "";
+    create();
+}
+
+function createStr(count) {
     if(count==1) document.write("나이를 입력해주세요!");
     else if(count==2) document.write("성별");
     else if(count==3) document.write("원하는 미팅 인원수");
@@ -25,18 +150,18 @@ function createStr() {
     }
 }
 
-function create() {
+function create(count) {
     const elem= document.getElementById("form");
     if(count==1) {
         elem.innerHTML = "<input type=text name=age id=input1 size=10 required></input>";
     }
     else if(count==2) {
-        elem.innerHTML = "<input type=radio name=sex id=male required> <label for=male> 남성 </label>\
-                <input type=radio name=sex id=female required> <label for=female> 여성 </label>"
+        elem.innerHTML = "<input type=radio name=sex value=male id=1> <label for=1> 남성 </label>\
+                <input type=radio name=sex value=female id=2> <label for=2> 여성 </label>"
     }
     else if(count==3) {
         elem.innerHTML = "<input type=checkbox name=peoplenum id=one value=1 > <label for = one> 소개팅 </label> \
-                <input type=checkbox name=peoplenum id=two value=2 required> <label for = two> 2명이서 </label>\
+                <input type=checkbox name=peoplenum id=two value=2> <label for = two> 2명이서 </label>\
                 <input type=checkbox name=peoplenum id=three value=3 > <label for = three> 3명이서 </label> \
                 <input type=checkbox name=peoplenum id=four value=4 > <label for = four> 4명이서 </label> "
     }
@@ -87,22 +212,22 @@ function create() {
    
     else if(count==12) {
         elem.innerHTML = "<input type=checkbox name=hobby id=1 value=1 > <label for = 1> 운동 </label> \
-                <input type=checkbox name=hobby id=2 value=2 required> <label for = 2> 산책 </label>\
+                <input type=checkbox name=hobby id=2 value=2 > <label for = 2> 산책 </label>\
                 <input type=checkbox name=hobby id=3 value=3 > <label for = 3> 공연관람 </label> \
                 <input type=checkbox name=hobby id=4 value=4 > <label for = 4> 쇼핑 </label> \
                 <input type=checkbox name=hobby id=5 value=1 > <label for = 5> 재태크 </label> \
-                <input type=checkbox name=hobby id=6 value=2 required> <label for = 6> 패션 </label>\
+                <input type=checkbox name=hobby id=6 value=2 > <label for = 6> 패션 </label>\
                 <input type=checkbox name=hobby id=7 value=3 > <label for = 7> 반려동물 </label> \
                 <input type=checkbox name=hobby id=8 value=4 > <label for = 8> 음악감상 </label>\
                 <input type=checkbox name=hobby id=9 value=1 > <label for = 9> 독서 </label> \
-                <input type=checkbox name=hobby id=10 value=2 required> <label for = 10> 여행 </label>\
+                <input type=checkbox name=hobby id=10 value=2 > <label for = 10> 여행 </label>\
                 <input type=checkbox name=hobby id=11 value=3 > <label for = 11> 카페 </label> \
                 <input type=checkbox name=hobby id=12 value=4 > <label for = 12> 게임 </label>\
-                <input type=checkbox name=hobby id=13 value=2 required> <label for = 13> 영화/드라마 </label>\
+                <input type=checkbox name=hobby id=13 value=2 > <label for = 13> 영화/드라마 </label>\
                 <input type=checkbox name=hobby id=14 value=3 > <label for = 14> 전시관람 </label> \
                 <input type=checkbox name=hobby id=15 value=4 > <label for = 15> 연극/뮤지컬 </label>\
                 <input type=checkbox name=hobby id=16 value=1 > <label for = 16> 술 </label> \
-                <input type=checkbox name=hobby id=17 value=2 required> <label for = 17> 악기연주 </label>\
+                <input type=checkbox name=hobby id=17 value=2 > <label for = 17> 악기연주 </label>\
                 <input type=checkbox name=hobby id=18 value=3 > <label for = 18> 맛집 </label> \
                 <input type=checkbox name=hobby id=19 value=4 > <label for = 19> 요리 </label>"
     }

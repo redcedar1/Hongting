@@ -4,36 +4,54 @@
   {% include 'myapp/index.html' %}
   <main class="AloneChoose2">
 
+    <script>
+      function checkAll() {
+        var checkboxes = document.getElementsByName("major");
+        var selected = false; // 라디오 버튼이 선택되었는지 여부
+
+        for (var i = 0; i < checkboxes.length; i++) {
+          if (checkboxes[i].checked) {
+            selected = true;
+            break;
+          }
+        }
+
+        if (!selected) {
+          alert("학과를 선택해주세요."); // 오류 메시지 출력
+          return false; // 폼 제출 방지
+        }
+
+        document
+          .getElementById("submit_major")
+          .value = selected ? "selected" : "";
+
+        return true; // 폼 제출 허용
+      }
+    </script>
+
     <body>
-      <script src="{% static 'myapp/js/Function.js' %}"></script>
       <br><br>
       <p>원하는 학과를 선택해주세요</p>
       <br><br>
 
-      <form id="Choose">
-          <input type="checkbox" name="major" id="1" value="liberal"> <label for="1"> 문과대 </label>
-          <input type="checkbox" name="major" id="2" value="science"> <label for="2"> 이과대 </label>
-          <input type="checkbox" name="major" id="3" value="education"> <label for="3"> 사범대 </label>
-          <input type="checkbox" name="major" id="4" value="physical"> <label for="4"> 체대 </label>
-          <input type="checkbox" name="major" id="5" value="art"> <label for="5"> 미대 </label>
-          <input type="checkbox" name="major" id="6" value="entertain"> <label for="6"> 예대 </label>
-          <input type="checkbox" name="major" id="7" value="music"> <label for="7"> 음대 </label>
-          <input type="checkbox" name="major" id="8" value="medicine"> <label for="8"> 의/약대 </label>
-          <input type="checkbox" name="major" id="9" value="special"> <label for="9"> 특수대 </label>   
-      </form>
+      <form id="Choose" action='/major/' method="post" onsubmit="return checkAll()">
+        <ul>
+          <input type="radio" name="major" id="1" value="liberal"> <label for="1"> 문과대 </label>
+          <input type="radio" name="major" id="2" value="science"> <label for="2"> 이과대 </label>
+          <input type="radio" name="major" id="3" value="education"> <label for="3"> 사범대 </label>
+          <input type="radio" name="major" id="4" value="physical"> <label for="4"> 체대 </label>
+          <input type="radio" name="major" id="5" value="art"> <label for="5"> 미대 </label>
+          <input type="radio" name="major" id="6" value="entertain"> <label for="6"> 예대 </label>
+          <input type="radio" name="major" id="7" value="music"> <label for="7"> 음대 </label>
+          <input type="radio" name="major" id="8" value="medicine"> <label for="8"> 의/약대 </label>
+          <input type="radio" name="major" id="9" value="special"> <label for="9"> 특수대 </label>   
+        </ul>
       <br>
       <div id="button">
-        <button type="button" onclick="ageSubmit();">
+        <button type="submit">
           제출
         </div>
-        <script>
-          const form = document.getElementById("Choose");
-
-          function ageSubmit() {
-            form.submit();
-            location.href = '/alonechoose2/';
-          }
-        </script>
+      </form>
       </body>
     </main>
 

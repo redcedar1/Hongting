@@ -39,14 +39,17 @@ button {
 #button {
     text-align: center;
 }
-#Choose {
+ul {
     display: grid;
-    place-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+
+    margin: 0%;
+    padding: 0%;
+}
+#Choose {
+    place-items: left;
     justify-content: center;
-    grid-template-columns: repeat(3, 70px);
-    grid-template-rows: repeat(3, 70px);
-    grid-column-gap: 30px;
-    grid-row-gap: 10px;
 }
 label {
     width: 70px;
@@ -59,11 +62,11 @@ label {
     line-height: 50px;
     margin: 10px
 }
-input[type="checkbox"]:checked + label {
+input[type="radio"]:checked + label {
     border-color: rgb(246, 124, 144);
     background-color: rgb(246, 124, 144);
 }
-input[type="checkbox"] {
+input[type="radio"] {
     display: none;
 }
 button {

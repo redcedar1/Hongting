@@ -4,12 +4,36 @@
   {% include 'myapp/index.html' %}
   <main class="AloneChoose2">
 
+    <script>
+      function checkAll() {
+        var checkboxes = document.getElementsByName("hobby");
+        var submit_hobby = [];
+
+        for (var i = 0; i < checkboxes.length; i++) {
+          if (checkboxes[i].checked) {
+            submit_hobby.push(checkboxes[i].value);
+          }
+        }
+
+        document
+          .getElementById("submit_hobby")
+          .value = submit_hobby.join(",");
+
+        if (submit_hobby.length === 0) {
+          alert("관심사를 선택해주세요.");
+          return false; // 폼 제출 방지
+        }
+      
+        return true; // 폼 제출 허용
+      }
+    </script>
+
     <body>
-      <script src="{% static 'myapp/js/Function.js' %}"></script>
       <br><br>
       <p>관심사를 선택해주세요</p>
 
-      <form id="Choose">
+      <form id="Choose" action='/hobby/' method="post" onsubmit="return checkAll()" >
+        <ul>
         <input type=checkbox id="1" name="hobby" value="exercise" > <label for = "1"> 운동 </label>
         <input type=checkbox id="2" name="hobby" value="walk" > <label for = "2"> 산책 </label>
         <input type=checkbox id="3" name="hobby" value="show" > <label for = "3"> 공연관람 </label>
@@ -29,20 +53,14 @@
         <input type=checkbox id="17" name="hobby" value="performane" > <label for = "17"> 악기연주 </label>
         <input type=checkbox id="18" name="hobby" value="eat" > <label for = "18"> 맛집 </label>
         <input type=checkbox id="19" name="hobby" value="cook" > <label for = "19"> 요리 </label>
-      </form>
+        </ul>
       <br>
+      <input type="hidden" name="submit_hobby" id="submit_hobby">
       <div id="button">
-        <button type="button" onclick="ageSubmit();">
+        <button type="submit">
           제출
         </div>
-        <script>
-          const form = document.getElementById("Choose");
-
-          function ageSubmit() {
-            form.submit();
-            location.href = '/alonechoose2/';
-          }
-        </script>
+      </form>
       </body>
     </main>
 

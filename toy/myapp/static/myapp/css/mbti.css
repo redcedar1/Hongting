@@ -40,13 +40,18 @@ button {
 #button {
     text-align: center;
 }
-#Choose {
+ul {
     display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+
+    margin: 0%;
+    padding: 0%;
+}
+#Choose {
     place-items: left;
     justify-content: center;
-    grid-template-columns: repeat(4, 70px);
-    grid-template-rows: repeat(3, 50px);
-    grid-row-gap: 30px;
+
 }
 label {
     width: 50px;

@@ -39,12 +39,18 @@ button {
 #button {
     text-align: center;
 }
-#Choose {
+ul {
     display: grid;
-    place-items: left;
-    justify-content: center;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(7, 1fr);
+
+    margin: 0%;
+    padding: 0%;
+}
+#Choose {
+    place-items: left;
+    justify-content: center;
+
 }
 label {
     width: 80px;
