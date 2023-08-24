@@ -153,6 +153,8 @@ def major(request):
 def mbti(request):
 
     return render(request, "myapp/mbti.html")
+
+myinfo_arr = {}
 @csrf_exempt
 def myinfo(request):
     access_token = request.session.get("access_token")
@@ -160,8 +162,10 @@ def myinfo(request):
     email = account_info.get("kakao_account", {}).get("email") # email이 있으면 email반환 없으면 빈칸 반환
     nickname = account_info.get("kakao_account", {}).get("nickname")
     context = {'email' : email, 'nickname':nickname}
+    context.update(myinfo_arr)
     print(email)
     print(nickname)
+    
     return render(request, "myapp/myinfo.html",context)
 @csrf_exempt
 def success(request):
@@ -173,9 +177,52 @@ def youinfo(request):
     return render(request, "myapp/youinfo.html")
 
 @csrf_exempt
-def my(request):
+def my(request,id):
+    global myinfo_arr
+    index = int(id) + 1
+    if request.method == "POST":
+        if int(id) == 1:
+            age = request.POST.get("age")
+            myinfo_arr['age'] = age
+        elif int(id) == 2:
+            sex = request.POST.get("sex")
+            myinfo_arr['sex'] = sex
+        elif int(id) == 3:
+            peoplenum = request.POST.get("peoplenum")
+            myinfo_arr['peoplenum'] = peoplenum
+        elif int(id) == 4:
+            job = request.POST.get("job")
+            myinfo_arr['job'] = job
+        elif int(id) == 5:
+            school = request.POST.get("school")
+            major =  request.POST.get("major")
+            graduate = school + major
+            myinfo_arr['graduate'] = graduate
+        elif int(id) == 6:
+            mbti = request.POST.get("mbti")
+            myinfo_arr['mbti'] = mbti
+        elif int(id) == 7:
+            army = request.POST.get("army")
+            myinfo_arr['army'] = army
+        elif int(id) == 8:
+            height = request.POST.get("height")
+            myinfo_arr['height'] = height
+        elif int(id) == 9:
+            body = request.POST.get("body")
+            myinfo_arr['body'] = body
+        elif int(id) == 10:
+            eyes = request.POST.get("eyes")
+            myinfo_arr['eyes'] = eyes
+        elif int(id) == 11:
+            face = request.POST.get("face")
+            myinfo_arr['face'] = face
+        elif int(id) == 12:
+            hobby = request.POST.get("hobby")
+            myinfo_arr['hobby'] = hobby
 
-    return render(request, "myapp/my.html")
+        return redirect(f"/my/{index}")
+    context = {'count':int(id)}
+    return render(request, "myapp/my.html",context)
     
 '''
 이런 방식을 사용해도 된다

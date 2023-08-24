@@ -1,11 +1,18 @@
-var count=1;
 
-function count() {
-    count++;
+function countAndUpdate(count) {
     if(count==14) location.href = '/choose/';
+
+    updateFormSections();
+    return false;
 }
 
-function createStr() {
+function updateFormSections() {
+    const elem = document.getElementById("form");
+    elem.innerHTML = "";
+    create();
+}
+
+function createStr(count) {
     if(count==1) document.write("나이를 입력해주세요!");
     else if(count==2) document.write("성별");
     else if(count==3) document.write("원하는 미팅 인원수");
@@ -25,7 +32,7 @@ function createStr() {
     }
 }
 
-function create() {
+function create(count) {
     const elem= document.getElementById("form");
     if(count==1) {
         elem.innerHTML = "<input type=text name=age id=input1 size=10 required></input>";
@@ -36,7 +43,7 @@ function create() {
     }
     else if(count==3) {
         elem.innerHTML = "<input type=checkbox name=peoplenum id=one value=1 > <label for = one> 소개팅 </label> \
-                <input type=checkbox name=peoplenum id=two value=2 required> <label for = two> 2명이서 </label>\
+                <input type=checkbox name=peoplenum id=two value=2> <label for = two> 2명이서 </label>\
                 <input type=checkbox name=peoplenum id=three value=3 > <label for = three> 3명이서 </label> \
                 <input type=checkbox name=peoplenum id=four value=4 > <label for = four> 4명이서 </label> "
     }
@@ -87,22 +94,22 @@ function create() {
    
     else if(count==12) {
         elem.innerHTML = "<input type=checkbox name=hobby id=1 value=1 > <label for = 1> 운동 </label> \
-                <input type=checkbox name=hobby id=2 value=2 required> <label for = 2> 산책 </label>\
+                <input type=checkbox name=hobby id=2 value=2 > <label for = 2> 산책 </label>\
                 <input type=checkbox name=hobby id=3 value=3 > <label for = 3> 공연관람 </label> \
                 <input type=checkbox name=hobby id=4 value=4 > <label for = 4> 쇼핑 </label> \
                 <input type=checkbox name=hobby id=5 value=1 > <label for = 5> 재태크 </label> \
-                <input type=checkbox name=hobby id=6 value=2 required> <label for = 6> 패션 </label>\
+                <input type=checkbox name=hobby id=6 value=2 > <label for = 6> 패션 </label>\
                 <input type=checkbox name=hobby id=7 value=3 > <label for = 7> 반려동물 </label> \
                 <input type=checkbox name=hobby id=8 value=4 > <label for = 8> 음악감상 </label>\
                 <input type=checkbox name=hobby id=9 value=1 > <label for = 9> 독서 </label> \
-                <input type=checkbox name=hobby id=10 value=2 required> <label for = 10> 여행 </label>\
+                <input type=checkbox name=hobby id=10 value=2 > <label for = 10> 여행 </label>\
                 <input type=checkbox name=hobby id=11 value=3 > <label for = 11> 카페 </label> \
                 <input type=checkbox name=hobby id=12 value=4 > <label for = 12> 게임 </label>\
-                <input type=checkbox name=hobby id=13 value=2 required> <label for = 13> 영화/드라마 </label>\
+                <input type=checkbox name=hobby id=13 value=2 > <label for = 13> 영화/드라마 </label>\
                 <input type=checkbox name=hobby id=14 value=3 > <label for = 14> 전시관람 </label> \
                 <input type=checkbox name=hobby id=15 value=4 > <label for = 15> 연극/뮤지컬 </label>\
                 <input type=checkbox name=hobby id=16 value=1 > <label for = 16> 술 </label> \
-                <input type=checkbox name=hobby id=17 value=2 required> <label for = 17> 악기연주 </label>\
+                <input type=checkbox name=hobby id=17 value=2 > <label for = 17> 악기연주 </label>\
                 <input type=checkbox name=hobby id=18 value=3 > <label for = 18> 맛집 </label> \
                 <input type=checkbox name=hobby id=19 value=4 > <label for = 19> 요리 </label>"
     }
