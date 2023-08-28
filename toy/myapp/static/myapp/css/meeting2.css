@@ -47,6 +47,13 @@ input[type="checkbox"]:checked + label {
 input[type="checkbox"] {
     display: none;
 }
+input[type="radio"]:checked + label {
+    border-color: rgb(246, 124, 144);
+    background-color: rgb(246, 124, 144);
+}
+input[type="radio"] {
+    display: none;
+}
 p {
     text-align: center;
     font-size: larger;

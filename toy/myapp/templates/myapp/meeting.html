@@ -28,7 +28,13 @@
           document
             .getElementById("submit_peoplenum")
             .value = submit_peoplenum.join(",");
-          return true;
+
+          if (submit_peoplenum.length === 0) {
+            alert("모든 필수 정보를 입력해주세요.");
+            return false; // 폼 제출 방지
+          }
+        
+          return true; // 폼 제출 허용
         }
       </script>
       <form id="MyForm" action='/meeting/' method="post" onsubmit="return checkAll()">
