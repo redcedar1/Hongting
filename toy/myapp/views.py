@@ -188,35 +188,32 @@ def my(request,id):
             sex = request.POST.get("sex")
             myinfo_arr['sex'] = sex
         elif int(id) == 3:
-            peoplenum = request.POST.get("peoplenum")
-            myinfo_arr['peoplenum'] = peoplenum
-        elif int(id) == 4:
             job = request.POST.get("job")
             myinfo_arr['job'] = job
-        elif int(id) == 5:
+        elif int(id) == 4:
             school = request.POST.get("school")
             major =  request.POST.get("major")
             graduate = school + major
             myinfo_arr['graduate'] = graduate
-        elif int(id) == 6:
+        elif int(id) == 5:
             mbti = request.POST.get("mbti")
             myinfo_arr['mbti'] = mbti
-        elif int(id) == 7:
+        elif int(id) == 6:
             army = request.POST.get("army")
             myinfo_arr['army'] = army
-        elif int(id) == 8:
+        elif int(id) == 7:
             height = request.POST.get("height")
             myinfo_arr['height'] = height
-        elif int(id) == 9:
+        elif int(id) == 8:
             body = request.POST.get("body")
             myinfo_arr['body'] = body
-        elif int(id) == 10:
+        elif int(id) == 9:
             eyes = request.POST.get("eyes")
             myinfo_arr['eyes'] = eyes
-        elif int(id) == 11:
+        elif int(id) == 10:
             face = request.POST.get("face")
             myinfo_arr['face'] = face
-        elif int(id) == 12:
+        elif int(id) == 11:
             hobby = request.POST.get("hobby")
             myinfo_arr['hobby'] = hobby
 

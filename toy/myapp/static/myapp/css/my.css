@@ -100,8 +100,12 @@ input[type="text"] {
     background-color: rgb(249, 199, 207);
     border-style: groove;
 }
+input[type="number"] {
+    background-color: rgb(249, 199, 207);
+    border-style: groove;
+}
 label {
-    width: 100px;
+    width: 110px;
     height: 50px;
     border: 5px solid rgb(249, 199, 207);
     background-color: rgb(249, 199, 207);
@@ -124,4 +128,9 @@ input[type="checkbox"]:checked + label {
 }
 input[type="checkbox"] {
     display: none;
+}
+input[type="range"] {
+    border: none;
+    accent-color: #6200ee;
+    opacity: 0.7;
 }
