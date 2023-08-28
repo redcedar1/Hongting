@@ -4,23 +4,23 @@ from .models import Info
 from myproject import settings
 import requests
 from django.template import loader
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 
 # Create your views here.
   
 count = 0
 @csrf_exempt
 def index(request):
-   return render(request, 'myapp/index.html')
+   return redirect("/home")
 
 
 
 def kakaologin(request):
     context = {'check':False}
     if request.session.get('access_token'): #만약 세션에 access_token이 있으면(==로그인 되어 있으면)
-        return redirect("/meeting/") #check 가 true, check는 kakaologin.html내에서 if문의 인자
+        return redirect("/home") #로그인 되어있으면 home페이지로
 
-    return render(request,"myapp/kakaologin.html",context)
+    return render(request,"myapp/kakaologin.html",context)#로그인 안되어있으면 로그인페이지로
 
 def kakaoLoginLogic(request):
     _restApiKey = '60010e5242c371826d538b43def648c3' # 입력필요
@@ -41,7 +41,7 @@ def kakaoLoginLogicRedirect(request):
     request.session['access_token'] = _result['access_token']
     request.session.modified = True
     
-    return redirect("/meeting")
+    return redirect("/home") #로그인 완료 후엔 home페이지로
 
 def kakaoLogout(request):
     
@@ -50,10 +50,6 @@ def kakaoLogout(request):
     _header = {
       'Authorization': f'bearer {_token}'
     }
-    # _url = 'https://kapi.kakao.com/v1/user/unlink'
-    # _header = {
-    #   'Authorization': f'bearer {_token}',
-    # }
     _res = requests.post(_url, headers=_header)
     _result = _res.json()
     
@@ -68,12 +64,22 @@ def kakaoLogout(request):
 
 @csrf_exempt
 def home(request):
-    article = 'home is here'
-    context = {"article":article}
-    return render(request, "myapp/home.html", context)
+    logged = 0
+    
+    access_token = request.session.get("access_token",None)
+    if access_token:
+        logged = 1
+
+    context = {'logged':logged}
+    return render(request, "myapp/home.html",context)
 
 @csrf_exempt
 def meeting(request):
+    #만약 자기소개 정보가 없으면
+    #return redirect('/my/1')
+    access_token = request.session.get("access_token",None)
+    if access_token == None: #로그인 안돼있으면
+        return render(request,"myapp/kakaologin.html") #로그인 시키기
     global count
     if request.method == "POST": # /home/meeting페이지로 인원 선택한 정보 전달
         peoplenum = ''
@@ -91,6 +97,10 @@ def meeting(request):
 
 @csrf_exempt
 def meeting2(request):
+    
+    access_token = request.session.get("access_token",None)
+    if access_token == None: #로그인 안돼있으면
+        return render(request,"myapp/kakaologin.html") #로그인 시키기
     global count
     if request.method == "POST": # /home/meeting2 로 선호 직업, 장소, 나이 전달
         job = request.POST.get('submit_job')
@@ -109,7 +119,7 @@ def meeting2(request):
         q.locations = location
         q.ages = age
         q.save()
-        return redirect("/home/")
+        return redirect("/matching/")
 
     count += 1
     return render(request, "myapp/meeting2.html")
@@ -157,7 +167,10 @@ def mbti(request):
 myinfo_arr = {}
 @csrf_exempt
 def myinfo(request):
-    access_token = request.session.get("access_token")
+    access_token = request.session.get("access_token",None)
+    if access_token == None: #로그인 안돼있으면
+        return render(request,"myapp/kakaologin.html") #로그인 시키기
+    
     account_info = requests.get("https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"}).json()
     email = account_info.get("kakao_account", {}).get("email") # email이 있으면 email반환 없으면 빈칸 반환
     nickname = account_info.get("kakao_account", {}).get("nickname")
@@ -176,10 +189,42 @@ def youinfo(request):
 
     return render(request, "myapp/youinfo.html")
 
+
+def is_valid_transition(current_page, requested_page):
+    # 요청한 페이지가 현재 페이지에서의 올바른 다음 페이지인지 확인
+    requested_page_int = int(requested_page)
+    if requested_page_int == current_page + 1 or current_page == requested_page_int :
+        return True
+    return False
+
 @csrf_exempt
 def my(request,id):
+    access_token = request.session.get("access_token",None)
+    if access_token == None: #로그인 안돼있으면
+        return render(request,"myapp/kakaologin.html") #로그인 시키기
+    
+    if request.method == "GET":
+        if int(id) == 1:
+            if request.session.get('current_page'):
+                del request.session['current_page']
+        
+        current_page = request.session.get('current_page', 0)
+        if int(id) < current_page:
+            current_page = int(id)
+
+        if not is_valid_transition(current_page, id):
+            # 올바른 페이지 이동이 아니면 거부
+            return HttpResponseForbidden("Forbidden")
+
+        # 페이지 이동을 허용하고, 세션 업데이트
+        request.session['current_page'] = int(id)
+
+    
+    #자기소개 한거 있으면 자기소개 내용 불러오고 choose페이지로 넘어가게
     global myinfo_arr
     index = int(id) + 1
+    if request.method == "GET" and int(id) == 12: #13페이지까지 이동하고 14페이지면 choose로 이동
+        return redirect("/meeting") 
     if request.method == "POST":
         if int(id) == 1:
             age = request.POST.get("age")
@@ -216,9 +261,14 @@ def my(request,id):
         elif int(id) == 11:
             hobby = request.POST.get("hobby")
             myinfo_arr['hobby'] = hobby
-
-        return redirect(f"/my/{index}")
+        else:
+            index = 1
+        
+        return redirect(f"/my/{index}") #다음페이지로 이동
+    #if db에 자기소개 정보있으면 return redirect("/choose")
+    
     context = {'count':int(id)}
+
     return render(request, "myapp/my.html",context)
     
 '''
@@ -238,7 +288,7 @@ def you(request):
 
 @csrf_exempt
 def choose(request):
-
+    #홍대축제에서 만나기 누르면 choose에서는 무조건 meeting으로 redirect
     return render(request, "myapp/choose.html")
       
 @csrf_exempt
@@ -261,13 +311,14 @@ def error(request):
     return render(request, "myapp/error.html")
 @csrf_exempt
 def result(request):
-    article = 'result'
-    context = {"article":article}
-    return render(request, "myapp/result.html", context)
+    access_token = request.session.get("access_token",None)
+    if access_token == None: #로그인 안돼있으면
+        return render(request,"myapp/kakaologin.html") #로그인 시키기
+    return render(request,"myapp/result.html")
     
 @csrf_exempt
 def menu(request):
-    article = 'menu'
-    context = {"article":article}
-    return render(request, "myapp/menu.html", context)
-    
+    access_token = request.session.get("access_token",None)
+    if access_token == None: #로그인 안돼있으면
+        return render(request,"myapp/kakaologin.html") #로그인 시키기
+    return render(request,"myapp/menu.html")

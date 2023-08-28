@@ -25,6 +25,7 @@
                     display: inline-block;
                     border-radius: 25%;
                     text-align: left;
+                    font-size: small;
                 }
                 .box3 {
                     grid-column: 1/5;
@@ -42,11 +43,12 @@
                     pointer-events: none;
                 }
                 .box4 {
-                    grid-column: 5/9;
+                    grid-column: 5/10;
                     grid-row: 2/3;
                     display: inline-block;
                     border-radius: 25%;
                     text-align: left;
+                    font-size: small;
                     opacity: 0.5;
                 }
                 .box5 {
@@ -65,11 +67,12 @@
                     pointer-events: none;
                 }
                 .box6 {
-                    grid-column: 5/9;
+                    grid-column: 5/10;
                     grid-row: 3/4;
                     display: inline-block;
                     border-radius: 25%;
                     text-align: left;
+                    font-size: small;
                     opacity: 0.5;
                 }
                 #navButton1 {

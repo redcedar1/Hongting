@@ -18,22 +18,34 @@
         function checkAll() {
           var checkboxes = document.getElementsByName("peoplenum");
           var submit_peoplenum = [];
+          var checkjobs = document.getElementsByName("job");
+          var submit_job = [];
 
           for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked) {
               submit_peoplenum.push(checkboxes[i].value);
             }
           }
+          for (var i = 0; i < checkjobs.length; i++) {
+            if (checkjobs[i].checked) {
+              submit_job.push(checkjobs[i].value);
+            }
+          }
 
           document
             .getElementById("submit_peoplenum")
             .value = submit_peoplenum.join(",");
+            document
+            .getElementById("submit_job")
+            .value = submit_job.join(",");
 
-          if (submit_peoplenum.length === 0) {
-            alert("모든 필수 정보를 입력해주세요.");
-            return false; // 폼 제출 방지
-          }
-        
+            var ageInput = document.getElementsByName("submit_age")[0];
+          
+            if (submit_job.length === 0 || submit_peoplenum.length === 0 || ageInput.value > 30) {
+              alert("모든 필수 정보를 입력해주세요.");
+              return false; // 폼 제출 방지
+            }
+
           return true; // 폼 제출 허용
         }
       </script>
@@ -48,20 +60,54 @@
               <p>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</p>
             </span>
             <input type="checkbox" name="peoplenum" id="change1" value="2">
-            <label for="change1">
+            <label id="one" for="change1">
               2명
             </label>
             <input type="checkbox" name="peoplenum" id="change2" value="3">
-            <label for="change2">
+            <label id="one" for="change2">
               3명
             </label>
             <input type="checkbox" name="peoplenum" id="change3" value="4">
-            <label for="change3">
+            <label id="one" for="change3">
               4명
             </label>
+
+            <p>
+              <strong>미팅 신청자의 직업</strong>
+            </p>
+            <span style="color:rgb(241, 48, 128)">
+              <p>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</p>
+            </span>
+            <input type="radio" id="ch1" name="job" value="univstu">
+            <label for="ch1">
+              대학생
+            </label>
+            <input type="radio" id="ch2" name="job" value="gradustu">
+            <label for="ch2">
+              대학원생
+            </label>
+            <br>
+            <input type="radio" id="ch3" name="job" value="human">
+            <label for="ch3">
+              취준생
+            </label>
+            <input type="radio" id="ch4" name="job" value="worker">
+            <label for="ch4">
+              직장인
+            </label>
+
+            <span style="color:rgb(241, 48, 128)">
+              <p>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</p>
+            </span>
+            <p><strong>미팅 참여자의 평균 나이</strong></p>
+            
+              <input type="range" name="submit_age" min="19" max="31" value = "31" oninput="document.getElementById('output1').innerHTML=this.value;" />
+              <br><span id="output1"></span>
           </ul>
         </fieldset>
         <input type="hidden" name="submit_peoplenum" id="submit_peoplenum">
+        <input type="hidden" name="submit_job" id="submit_job">
+        <input type="hidden" name="submit_age" id="submit_age">
         <br>
         <div id="button">
           <button type="submit">
