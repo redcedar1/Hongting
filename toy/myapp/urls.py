@@ -18,6 +18,11 @@ urlpatterns = [
     path('menu/',views.menu,name='menu'),
     path('meeting/',views.meeting,name='meeting'),
     path('meeting2/',views.meeting2,name='meeting2'),
+    path('good/',views.good,name='good'),
+    path('fail/',views.fail,name='fail'),
+    path('go/',views.go,name='go'),
+    path('use/',views.use,name='use'),
+    
     path('my/<id>/',views.my,name='my'),
     path('choose/',views.choose,name='choose'),
     path('kakaologin/',views.kakaologin,name='kakaologin'),

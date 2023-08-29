@@ -84,9 +84,6 @@ def meeting(request):
     if request.method == "POST": # /home/meeting페이지로 인원 선택한 정보 전달
         peoplenum = ''
         peoplenum = request.POST.get('submit_peoplenum') #인원 선택 정보 추출
-        if peoplenum == '': #인원 값이 없으면
-            errormsg = {"error_message": "인원을 선택하지 않으셨습니다."}
-            return render(request, "myapp/meeting.html", errormsg)
         q = Info.objects.create(peoplenums=peoplenum)
         q.save()
         count = q.id
@@ -104,25 +101,29 @@ def meeting2(request):
     global count
     if request.method == "POST": # /home/meeting2 로 선호 직업, 장소, 나이 전달
         job = request.POST.get('submit_job')
-        location = request.POST.get('submit_location')
         age = request.POST.get('submit_age')
         print(job)
-        print(location)
         print(age)
-
-        if job == '' or location =='': #인원 값이 없으면
-            errormsg = {"error_message": "모든 필드에서 최소 한가지를 선택해 주세요."}
-            return render(request, "myapp/meeting2.html", errormsg)
-
         q = Info.objects.latest('id')
         q.jobs = job
-        q.locations = location
         q.ages = age
         q.save()
-        return redirect("/matching/")
+        return redirect("/good/")
 
     count += 1
     return render(request, "myapp/meeting2.html")
+
+@csrf_exempt
+def good(request):
+
+    return render(request, "myapp/good.html")
+
+@csrf_exempt
+def go(request):
+
+    return render(request, "myapp/go.html")
+
+
 @csrf_exempt
 def alonechoose(request):
 
@@ -153,7 +154,7 @@ def hobby(request):
     return render(request, "myapp/hobby.html")
 @csrf_exempt
 def kakao(request):
-
+    #db에서 매칭된 상대방 카카오아이디 가져오기
     return render(request, "myapp/kakao.html")
 @csrf_exempt
 def major(request):
@@ -184,6 +185,12 @@ def myinfo(request):
 def success(request):
 
     return render(request, "myapp/success.html")
+
+@csrf_exempt
+def fail(request):
+
+    return render(request, "myapp/fail.html")
+
 @csrf_exempt
 def youinfo(request):
 
@@ -223,8 +230,8 @@ def my(request,id):
     #자기소개 한거 있으면 자기소개 내용 불러오고 choose페이지로 넘어가게
     global myinfo_arr
     index = int(id) + 1
-    if request.method == "GET" and int(id) == 12: #13페이지까지 이동하고 14페이지면 choose로 이동
-        return redirect("/meeting") 
+    if request.method == "GET" and int(id) == 13: #13페이지까지 이동하고 14페이지면 choose로 이동
+        return redirect("/go") 
     if request.method == "POST":
         if int(id) == 1:
             age = request.POST.get("age")
@@ -261,6 +268,9 @@ def my(request,id):
         elif int(id) == 11:
             hobby = request.POST.get("hobby")
             myinfo_arr['hobby'] = hobby
+        elif int(id) == 12:
+            free = request.POST.get("free")
+            myinfo_arr['free'] = free
         else:
             index = 1
         
@@ -309,16 +319,22 @@ def matching3(request):
 def error(request):
 
     return render(request, "myapp/error.html")
+
+@csrf_exempt
+def use(request):
+
+    return render(request, "myapp/use.html")
+
 @csrf_exempt
 def result(request):
+    #db에서 신청한 매칭인원 정보를 받아와서 html에 넘겨서 특정 매칭만 결과확인할 수 있도록 하기
+    context = {'matched' : 1}#매칭되면 matched 값 1 안되면 None
     access_token = request.session.get("access_token",None)
     if access_token == None: #로그인 안돼있으면
         return render(request,"myapp/kakaologin.html") #로그인 시키기
-    return render(request,"myapp/result.html")
+    return render(request,"myapp/result.html",context)
     
 @csrf_exempt
 def menu(request):
-    access_token = request.session.get("access_token",None)
-    if access_token == None: #로그인 안돼있으면
-        return render(request,"myapp/kakaologin.html") #로그인 시키기
+
     return render(request,"myapp/menu.html")
