@@ -13,3 +13,8 @@ button {
     font-size: large;
     line-height: 15px;
 }
+#box {
+    opacity: 0.7;
+    text-align: left;
+    font-size:x-small;
+}
