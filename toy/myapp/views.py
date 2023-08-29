@@ -104,25 +104,25 @@ def meeting2(request):
     global count
     if request.method == "POST": # /home/meeting2 로 선호 직업, 장소, 나이 전달
         job = request.POST.get('submit_job')
-        location = request.POST.get('submit_location')
         age = request.POST.get('submit_age')
         print(job)
-        print(location)
         print(age)
-
-        if job == '' or location =='': #인원 값이 없으면
-            errormsg = {"error_message": "모든 필드에서 최소 한가지를 선택해 주세요."}
-            return render(request, "myapp/meeting2.html", errormsg)
-
         q = Info.objects.latest('id')
         q.jobs = job
-        q.locations = location
         q.ages = age
         q.save()
-        return redirect("/matching/")
+        return redirect("/good/")
 
     count += 1
     return render(request, "myapp/meeting2.html")
+
+@csrf_exempt
+def good(request):
+
+    return render(request, "myapp/good.html")
+
+
+
 @csrf_exempt
 def alonechoose(request):
 
@@ -184,6 +184,12 @@ def myinfo(request):
 def success(request):
 
     return render(request, "myapp/success.html")
+
+@csrf_exempt
+def fail(request):
+
+    return render(request, "myapp/fail.html")
+
 @csrf_exempt
 def youinfo(request):
 
@@ -223,7 +229,7 @@ def my(request,id):
     #자기소개 한거 있으면 자기소개 내용 불러오고 choose페이지로 넘어가게
     global myinfo_arr
     index = int(id) + 1
-    if request.method == "GET" and int(id) == 12: #13페이지까지 이동하고 14페이지면 choose로 이동
+    if request.method == "GET" and int(id) == 13: #13페이지까지 이동하고 14페이지면 choose로 이동
         return redirect("/meeting") 
     if request.method == "POST":
         if int(id) == 1:
@@ -261,6 +267,9 @@ def my(request,id):
         elif int(id) == 11:
             hobby = request.POST.get("hobby")
             myinfo_arr['hobby'] = hobby
+        elif int(id) == 12:
+            free = request.POST.get("free")
+            myinfo_arr['free'] = free
         else:
             index = 1
         

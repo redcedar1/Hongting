@@ -87,13 +87,17 @@
       </div>
       <script>
         function goYouInfo() {
-          location.href = '/youinfo/';
+            location.href = '/youinfo/';
         }
-
+    
         function goKakao() {
-          location.href = '/kakao/';
+            if ({{matched}}) {
+                location.href = '/kakao/';
+            } else {
+                location.href = '/fail/';
+            }
         }
-      </script>
+    </script>
     </body>
   </main>
 
