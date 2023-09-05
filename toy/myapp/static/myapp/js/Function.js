@@ -64,8 +64,41 @@ function validateForm(count) {
             return false;
         }
     } else if (count === 5) {
-        const mbtiInput = document.querySelector("[name='mbti']");
-        if (!mbtiInput.value) {
+        const mbtiInput1 = document.querySelectorAll("[name='mbti1']");
+        const mbtiInput2 = document.querySelectorAll("[name='mbti2']");
+        const mbtiInput3 = document.querySelectorAll("[name='mbti3']");
+        const mbtiInput4 = document.querySelectorAll("[name='mbti4']");
+    
+        let selectedmbti1 = false;
+        let selectedmbti2 = false;
+        let selectedmbti3 = false;
+        let selectedmbti4 = false;
+    
+        mbtiInput1.forEach(input => {
+            if (input.checked) {
+                selectedmbti1 = true;
+            }
+        });
+    
+        mbtiInput2.forEach(input => {
+            if (input.checked) {
+                selectedmbti2 = true;
+            }
+        });
+    
+        mbtiInput3.forEach(input => {
+            if (input.checked) {
+                selectedmbti3 = true;
+            }
+        });
+    
+        mbtiInput4.forEach(input => {
+            if (input.checked) {
+                selectedmbti4 = true;
+            }
+        });
+    
+        if (!(selectedmbti1 && selectedmbti2 && selectedmbti3 && selectedmbti4)) {
             alert("MBTI를 입력해주세요.");
             return false;
         }
@@ -135,13 +168,17 @@ function validateForm(count) {
             alert("취미를 최소한 하나 이상 선택해주세요.");
             return false;
         }
+        else if (selectedHobbyCount > 3) {
+            alert("취미는 3개까지만 선택할 수 있습니다.");
+            return false;
+        }
     } else if (count === 12) {
         const freeTextarea = document.getElementById("input2");
         if (!freeTextarea.value) {
             alert("자기소개를 입력해주세요.");
             return false;
         }
-    }
+    } 
     // 다른 질문에 대한 유효성 검사도 추가하세요
 
     return true;
@@ -158,7 +195,10 @@ function createStr(count) {
     else if(count==8) document.write("체형을 입력해주세요"); //탭으로(마름, 보통, 통통, 근육)
     else if(count==9) document.write("유/무쌍을 입력해주세요"); //탭으로
     else if(count==10) document.write("얼굴상을 입력해주세요"); //뚜렷, 두부
-    else if(count==11) document.write("관심사를 입력해주세요"); //탭으로
+    else if(count==11) {
+        document.write("관심사를 선택해주세요<br>");
+        document.write("최대 3가지까지만 선택 가능합니다.");
+     } //탭으로
     else if(count==12) {
         document.write("자유로운 자기소개<br>");
         document.write("최소 10자의 자기소개를 적어주세요.<br>");
@@ -196,7 +236,14 @@ function create(count) {
         <input type=radio id=9 name=major value=special> <label for = 9> 특수대 </label> "
     }
     else if(count==5) {
-        elem.innerHTML = "<input type=text name=mbti placeholder=mbti size=10 required></input>"
+        elem.innerHTML = "<input type=radio id=1 name=mbti1 value=e> <label for=1> E </label> \
+        <input type=radio id=5 name=mbti1 value=i> <label for=5> I </label>\
+        <input type=radio id=2 name=mbti2 value=s> <label for=2> S </label> \
+        <input type=radio id=6 name=mbti2 value=n> <label for=6> N </label>\
+        <input type=radio id=3 name=mbti3 value=f> <label for=3> F </label>\
+        <input type=radio id=7 name=mbti3 value=t> <label for=7> T </label>\
+        <input type=radio id=4 name=mbti4 value=j> <label for=4> J </label>\
+        <input type=radio id=8 name=mbti4 value=p> <label for=8> P </label> "
     }
     else if(count==6) {
         elem.innerHTML = "<input type=radio id=1 name=army value=go > <label for=1> 군필 </label> \
@@ -247,7 +294,6 @@ function create(count) {
         elem.innerHTML = "<br> <textarea name=free id=input2 cols=40 rows=10> </textarea> \
         <p> 제출하면 자기소개가 완료됩니다! </p>"
     }
-
 }
 
 function major() {

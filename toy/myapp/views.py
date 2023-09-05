@@ -84,9 +84,6 @@ def meeting(request):
     if request.method == "POST": # /home/meeting페이지로 인원 선택한 정보 전달
         peoplenum = ''
         peoplenum = request.POST.get('submit_peoplenum') #인원 선택 정보 추출
-        if peoplenum == '': #인원 값이 없으면
-            errormsg = {"error_message": "인원을 선택하지 않으셨습니다."}
-            return render(request, "myapp/meeting.html", errormsg)
         q = Info.objects.create(peoplenums=peoplenum)
         q.save()
         count = q.id
@@ -121,6 +118,10 @@ def good(request):
 
     return render(request, "myapp/good.html")
 
+@csrf_exempt
+def go(request):
+
+    return render(request, "myapp/go.html")
 
 
 @csrf_exempt
@@ -153,7 +154,7 @@ def hobby(request):
     return render(request, "myapp/hobby.html")
 @csrf_exempt
 def kakao(request):
-
+    #db에서 매칭된 상대방 카카오아이디 가져오기
     return render(request, "myapp/kakao.html")
 @csrf_exempt
 def major(request):
@@ -230,7 +231,7 @@ def my(request,id):
     global myinfo_arr
     index = int(id) + 1
     if request.method == "GET" and int(id) == 13: #13페이지까지 이동하고 14페이지면 choose로 이동
-        return redirect("/meeting") 
+        return redirect("/go") 
     if request.method == "POST":
         if int(id) == 1:
             age = request.POST.get("age")
@@ -247,7 +248,11 @@ def my(request,id):
             graduate = school + major
             myinfo_arr['graduate'] = graduate
         elif int(id) == 5:
-            mbti = request.POST.get("mbti")
+            mbti1 = request.POST.get("mbti1")
+            mbti2 = request.POST.get("mbti2")
+            mbti3 = request.POST.get("mbti3")
+            mbti4 = request.POST.get("mbti4")
+            mbti = mbti1 + mbti2 + mbti3 + mbti4
             myinfo_arr['mbti'] = mbti
         elif int(id) == 6:
             army = request.POST.get("army")
@@ -318,16 +323,22 @@ def matching3(request):
 def error(request):
 
     return render(request, "myapp/error.html")
+
+@csrf_exempt
+def use(request):
+
+    return render(request, "myapp/use.html")
+
 @csrf_exempt
 def result(request):
+    #db에서 신청한 매칭인원 정보를 받아와서 html에 넘겨서 특정 매칭만 결과확인할 수 있도록 하기
+    context = {'matched' : 1}#매칭되면 matched 값 1 안되면 None
     access_token = request.session.get("access_token",None)
     if access_token == None: #로그인 안돼있으면
         return render(request,"myapp/kakaologin.html") #로그인 시키기
-    return render(request,"myapp/result.html")
+    return render(request,"myapp/result.html",context)
     
 @csrf_exempt
 def menu(request):
-    access_token = request.session.get("access_token",None)
-    if access_token == None: #로그인 안돼있으면
-        return render(request,"myapp/kakaologin.html") #로그인 시키기
+
     return render(request,"myapp/menu.html")
