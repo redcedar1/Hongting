@@ -342,3 +342,13 @@ def result(request):
 def menu(request):
 
     return render(request,"myapp/menu.html")
+
+@csrf_exempt
+def kakaoid(request):
+
+    return render(request,"myapp/kakaoid.html")
+
+@csrf_exempt
+def logout(request):
+
+    return render(request,"myapp/logout.html")

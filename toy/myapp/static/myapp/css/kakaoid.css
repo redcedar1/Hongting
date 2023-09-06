@@ -40,13 +40,33 @@ button {
     text-align: center;
 }
 #Choose {
-    display: grid;
     place-items: center;
     justify-content: center;
-    grid-template-columns: repeat(3, 70px);
-    grid-template-rows: repeat(3, 70px);
 }
 input[type="text"] {
     background-color: rgb(249, 199, 207);
     border-style: groove;
+    position: relative;
+    left: 28%;
+    width: 130px;
+}
+
+img {
+    width: 300px;
+    height: 200px;
+    object-fit: contain;
+}
+
+button {
+    background-color: white;
+    border-radius: 25%;
+    border-color: white;
+    border: none;
+    display: block;
+    padding: 10px 10px;
+    font-weight: 600;
+    font-size: large;
+    line-height: 15px;
+    grid-column: 1/2;
+    margin: auto;
 }

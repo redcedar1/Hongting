@@ -38,5 +38,7 @@ urlpatterns = [
     path('mbti/',views.mbti,name='mbti'),
     path('myinfo/',views.myinfo,name='myinfo'),
     path('success/',views.success,name='success'),
-    path('youinfo/',views.youinfo,name='youinfo')
+    path('youinfo/',views.youinfo,name='youinfo'),
+    path('kakaoid/',views.kakaoid,name='kakaoid'),
+    path('logout/',views.logout,name='logout')
 ]
