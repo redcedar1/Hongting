@@ -1,6 +1,6 @@
-
+from django.views.static import serve
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from myapp import views
 urlpatterns = [
     path('',views.index),
@@ -39,6 +39,5 @@ urlpatterns = [
     path('myinfo/',views.myinfo,name='myinfo'),
     path('success/',views.success,name='success'),
     path('youinfo/',views.youinfo,name='youinfo'),
-    path('kakaoid/',views.kakaoid,name='kakaoid'),
-    path('logout/',views.logout,name='logout')
+    path('kakaoid/',views.kakaoid,name='kakaoid')
 ]
