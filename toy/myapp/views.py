@@ -15,17 +15,16 @@ from django.db.models import Q
 def index(request):
    return redirect("/home")
 
-
-
 def kakaologin(request):
     context = {'check':False}
-    if request.session.get('access_token'): #만약 세션에 access_token이 있으면(==로그인 되어 있으면)
-        access_token = request.session.get('access_token')
+    access_token = request.session.get("access_token",None)
+    if access_token: #만약 세션에 access_token이 있으면(==로그인 되어 있으면)
         account_info = requests.get("https://kapi.kakao.com/v2/user/me",
                                     headers={"Authorization": f"Bearer {access_token}"}).json()
         kakao_id = account_info.get("id")
         try:
             user_profile = Info.objects.get(kakao_id=kakao_id)  # 카카오톡 ID를 사용하여 사용자 정보 조회
+            print(kakao_id)
             context['user_profile'] = user_profile
         except Info.DoesNotExist:
             # 새로운 레코드 생성
@@ -39,14 +38,14 @@ def kakaologin(request):
 
 def kakaoLoginLogic(request):
     _restApiKey = '60010e5242c371826d538b43def648c3' # 입력필요
-    _redirectUrl = 'http://ec2-43-201-251-218.ap-northeast-2.compute.amazonaws.com:8080/kakaoLoginLogicRedirect'
+    _redirectUrl = 'http://127.0.0.1:8000/kakaoLoginLogicRedirect'
     _url = f'https://kauth.kakao.com/oauth/authorize?client_id={_restApiKey}&redirect_uri={_redirectUrl}&response_type=code'
     return redirect(_url)
 
 def kakaoLoginLogicRedirect(request):
     _qs = request.GET['code']
     _restApiKey = '60010e5242c371826d538b43def648c3' # 입력필요
-    _redirect_uri = 'http://ec2-43-201-251-218.ap-northeast-2.compute.amazonaws.com:8080/kakaoLoginLogicRedirect'
+    _redirect_uri = 'http://127.0.0.1:8000/kakaoLoginLogicRedirect'
     _url = f'https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id={_restApiKey}&redirect_uri={_redirect_uri}&code={_qs}'
     _res = requests.post(_url)
     _result = _res.json()
@@ -60,22 +59,9 @@ def kakaoLogout(request):
     if access_token == None: #로그인 안돼있으면
         return redirect("/home") #걍 home으로 보내기
 
-
-    _token = request.session['access_token']
-    _url = 'https://kapi.kakao.com/v1/user/logout'
-    _header = {
-      'Authorization': f'bearer {_token}'
-    }
-    _res = requests.post(_url, headers=_header)
-    _result = _res.json()
-    
-    print(_result.get('id'))#액세스 토큰은 바뀌어도 id값은 안바뀌니 이것으로 조회 가능
-    if _result.get('id'):
-        
+    else:
         del request.session['access_token']
         return render(request, 'myapp/loginoutsuccess.html')
-    else:
-        return render(request, 'myapp/logouterror.html')
 
 
 @csrf_exempt
@@ -138,8 +124,8 @@ def meeting2(request):
 
 
     if request.method == "POST": # /home/meeting2 로 선호 직업, 장소, 나이 전달
-        jobs = request.POST.get('submit_job')
-        ages = request.POST.get('submit_age')
+        jobs = request.POST.get('submit_job').split(', ')
+        ages = request.POST.get('submit_age').split(', ')#', '로 파싱해서 데이터베이스 저장
 
         kakao_id = account_info.get("id")
         
@@ -160,7 +146,7 @@ def meeting2(request):
         
         return redirect("/good/")
 
-    count += 1
+    #count += 1  여기 때문에 meeting2.html 에서 오류 -> 주석처리
     return render(request, "myapp/meeting2.html")
 
 @csrf_exempt
@@ -212,9 +198,8 @@ def kakao(request):
                                 headers={"Authorization": f"Bearer {access_token}"}).json()
     if request.method == 'GET':
         kakao_id = account_info.get("id")
-        print("kakao_id : ", kakao_id)
+        print("kakao_id: ", kakao_id)
 
-        # 예를 들어 사용자의 정보가 다음과 같다면:
         user_info = Info.objects.get(kakao_id=kakao_id)
         user_gender = user_info.sex
         peoplenum = user_info.peoplenum
@@ -222,8 +207,10 @@ def kakao(request):
         jobs = user_info.jobs.split(',')
 
         matched_profiles = match_info_profiles(user_gender, peoplenum, ages, jobs)
-        # matched_profiles = Info.objects.get(kakao_id=1)
-        return render(request, 'myapp/kakao.html', {'matched_profiles': matched_profiles})
+
+        if matched_profiles:
+            first_matched_profile = matched_profiles[0]
+            return render(request, 'myapp/kakao.html', {'matched_profiles': first_matched_profile})
 
     return render(request, "myapp/kakao.html")
 @csrf_exempt
@@ -238,8 +225,9 @@ def mbti(request):
 @csrf_exempt
 def myinfo(request):
     access_token = request.session.get("access_token",None)
-    #if access_token == None: #로그인 안돼있으면
-        #return render(request,"myapp/kakaologin.html") #로그인 시키기
+    print(access_token)
+    if access_token == None: #로그인 안돼있으면
+        return render(request,"myapp/kakaologin.html") #로그인 시키기
     
     account_info = requests.get("https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"}).json()
     kakao_id = account_info.get("id")
@@ -274,8 +262,8 @@ def is_valid_transition(current_page, requested_page):
 @csrf_exempt
 def my(request,id):
     access_token = request.session.get("access_token",None)
-    #if access_token == None: #로그인 안돼있으면
-        #return render(request,"myapp/kakaologin.html") #로그인 시키기
+    if access_token == None: #로그인 안돼있으면
+        return render(request,"myapp/kakaologin.html") #로그인 시키기
     
     account_info = requests.get("https://kapi.kakao.com/v2/user/me",
                                 headers={"Authorization": f"Bearer {access_token}"}).json()
@@ -377,7 +365,6 @@ def my(request,id):
                     hobby=request.session.get('hobby'),
                     free=request.session.get('free')
                 )
-            request.session.clear()
             return redirect("/kakaoid/")  # 모든 정보를 입력한 후 성공 페이지로 이동
         else:
             return redirect(f"/my/{index2}")  # 다음 페이지로 이동
@@ -421,13 +408,20 @@ def use(request):
     return render(request, "myapp/use.html")
 
 @csrf_exempt
-def result(request):#추후 보강 해야함(09.07)
-    #db에서 신청한 매칭인원 정보를 받아와서 html에 넘겨서 특정 매칭만 결과확인할 수 있도록 하기
-    context = {'matched' : 1}#매칭되면 matched 값 1 안되면 None
-    access_token = request.session.get("access_token",None)
-    if access_token == None: #로그인 안돼있으면
-        return render(request,"myapp/kakaologin.html") #로그인 시키기
-    return render(request,"myapp/result.html",context)
+def result(request):  # 추후 보강 해야함(09.07)
+    access_token = request.session.get("access_token", None)
+    if access_token == None:  # 로그인 안돼있으면
+        return render(request, "myapp/kakaologin.html")  # 로그인 시키기
+
+    account_info = requests.get("https://kapi.kakao.com/v2/user/me",
+                                headers={"Authorization": f"Bearer {access_token}"}).json()
+    if request.method == 'GET':
+        kakao_id = account_info.get("id")
+        print("kakao_id : ", kakao_id)
+
+        # 예를 들어 사용자의 정보가 다음과 같다면:
+        user_info = Info.objects.get(kakao_id=kakao_id)
+    return render(request, "myapp/result.html", {'user_info': user_info})
     
 @csrf_exempt
 def menu(request):
@@ -436,12 +430,11 @@ def menu(request):
 
 @csrf_exempt
 def kakaoid(request):
-    access_token = request.session.get("access_token", None)
-    if access_token is None:
-        return render(request, "myapp/kakaologin.html")
+    access_token = request.session.get("access_token",None)
+    if access_token == None: #로그인 안돼있으면
+        return redirect("/kakaologin")
 
-    account_info = requests.get("https://kapi.kakao.com/v2/user/me",
-                                headers={"Authorization": f"Bearer {access_token}"}).json()
+    account_info = requests.get("https://kapi.kakao.com/v2/user/me",headers={"Authorization": f"Bearer {access_token}"}).json()
 
     if request.method == "POST":
         kakao_id = account_info.get("id")

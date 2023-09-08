@@ -15,18 +15,79 @@
       <div id="Info">
       <p>나이: {{ matched_profiles.age }}살</p>
       <p>미팅 인원수: {{ matched_profiles.peoplenum }}명</p>
-      <p>직업: <script>printjob({{matched_profiles.job }})</script></p>
-      <p>학교와 학과: {{ matched_profile.school }} <script>printmajor({{matched_profile.major }})</script></p>
-      <p>mbti: <script>printmbti({{ matched_profiles.mbti }})</script></p>
-      {% if matched_profiles.gender == 'M' %}<p>군/미필: <script>printarmy({{matched_profiles.army }})</script></p>{% endif %}
+      <p>직업: 
+        {% if matched_profiles.job == 'univstu' %}
+        대학생
+      {% elif matched_profiles.job == 'gradustu' %}
+        대학원생
+      {% elif matched_profiles.job == 'human' %}
+        취준생
+      {% elif matched_profiles.job == 'worker' %}
+        직장인
+      {% endif %}
+      </p>
+      <p>학교와 학과: 
+        {{ matched_profile.school }} 
+        {% if matched_profile.major == 'liberal' %}
+    문과대
+  {% elif matched_profile.major == 'science' %}
+    이과대
+  {% elif matched_profile.major == 'education' %}
+    사범대
+  {% elif matched_profile.major == 'physical' %}
+    체대
+  {% elif matched_profile.major == 'art' %}
+    미대
+  {% elif matched_profile.major == 'entertain' %}
+    예대
+  {% elif matched_profile.major == 'music' %}
+    음대
+  {% elif matched_profile.major == 'medicine' %}
+    의/약대
+  {% elif matched_profile.major == 'special' %}
+    특수대
+  {% endif %}
+      </p>
+      <p>mbti: {{ matched_profile.mbti }} </p>
+
+      {% if matched_profiles.gender == 'M' %}
+      <p>군/미필: 
+        {% if matched_profile.army == 'go' %}
+        군필
+      {% elif matched_profile.army == 'nongo' %}
+        미필
+      {% endif %}
+      </p>{% endif %}
       <p>키: {{ matched_profiles.height }}cm</p>
-      <p>체형: <script>printbody({{matched_profiles.body }})</script></p>
-      <p>유/무쌍: <script>printeyes({{matched_profiles.eyes}})</script></p>
-      <p>얼굴상: <script>printface({{matched_profiles.face}})</script></p>
-      <p>관심사: <script>printhobby({{matched_profiles.hobby}})</script></p>
+      <p>체형: 
+        {% if matched_profile.body == 'thin' %}
+        마름
+      {% elif matched_profile.body == 'normal' %}
+        보통
+      {% elif matched_profile.body == 'fat' %}
+        통통
+      {% elif matched_profile.body == 'muscle' %}
+        탄탄
+      {% endif %}
+      </p>
+      <p>유/무쌍: 
+        {% if matched_profile.eyes == 'yes' %}
+        유쌍
+      {% elif matched_profile.eyes == 'no' %}
+        무쌍
+      {% endif %}
+      </p>
+      <p>얼굴상: 
+        {% if matched_profile.face == 'tubu' %}
+        두부상
+      {% elif matched_profile.face == 'arab' %}
+        뚜렷상
+      {% endif %}
+      </p>
+      <p>관심사: {{ matched_profile.hobby }}</p>
       </div>
       <div id="Info2">
-        <p>자유로운 자기소개: {{ matched_profiles.introduction }}</p>
+        <p>자유로운 자기소개: {{ matched_profiles.free }}</p>
       </div>
     </body>
   </main>
