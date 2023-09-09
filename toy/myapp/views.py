@@ -1,6 +1,7 @@
 from allauth.socialaccount.models import SocialAccount
 import ast
 from django.shortcuts import render,HttpResponse,redirect,get_object_or_404
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from .models import Info
 from myproject import settings
@@ -84,12 +85,12 @@ def home(request):
 def meeting(request):
     #만약 자기소개 정보가 없으면
     #return redirect('/my/1')
-    access_token = request.session.get("access_token",None)
-    if access_token == None: #로그인 안돼있으면
-        return render(request,"myapp/kakaologin.html") #로그인 시키기
-    
-    account_info = requests.get("https://kapi.kakao.com/v2/user/me",
-                                headers={"Authorization": f"Bearer {access_token}"}).json()
+    access_token = request.session.get("access_token", None)
+    if access_token:
+        logged = 1
+        account_info = requests.get("https://kapi.kakao.com/v2/user/me",
+                                    headers={"Authorization": f"Bearer {access_token}"}).json()
+
 
     if request.method == "POST": # /home/meeting페이지로 인원 선택한 정보 전달
         peoplenum = ''
@@ -118,21 +119,19 @@ def meeting(request):
 
 @csrf_exempt
 def meeting2(request):
-    
-    access_token = request.session.get("access_token",None)
-    if access_token == None: #로그인 안돼있으면
-        return render(request,"myapp/kakaologin.html") #로그인 시키기
-    
-    account_info = requests.get("https://kapi.kakao.com/v2/user/me",
-                                headers={"Authorization": f"Bearer {access_token}"}).json()
+    access_token = request.session.get("access_token", None)
+    if access_token:
+        logged = 1
+        account_info = requests.get("https://kapi.kakao.com/v2/user/me",
+                                    headers={"Authorization": f"Bearer {access_token}"}).json()
 
 
-    if request.method == "POST": # /home/meeting2 로 선호 직업, 장소, 나이 전달
+    if request.method == "POST":  # /home/meeting2 로 선호 직업, 장소, 나이 전달
         jobs = request.POST.get('submit_job').split(', ')
-        ages = request.POST.get('submit_age').split(', ')#', '로 파싱해서 데이터베이스 저장
+        ages = request.POST.get('submit_age').split(', ')  # ', '로 파싱해서 데이터베이스 저장
 
         kakao_id = account_info.get("id")
-        
+
         user_info = Info.objects.filter(kakao_id=kakao_id).first()
 
         if user_info is None:
@@ -140,17 +139,18 @@ def meeting2(request):
             user_info = Info.objects.create(
                 kakao_id=kakao_id,
                 jobs=', '.join(jobs),
-                ages=', '.join(ages)
+                ages=', '.join(ages),
+                matching_application=True  # 매칭 신청 여부를 True로 설정
             )
         else:
             # 사용자 정보가 이미 있으면 업데이트
             user_info.jobs = ', '.join(jobs)
             user_info.ages = ', '.join(ages)
+            user_info.matching_application = True  # 매칭 신청 여부를 True로 설정
             user_info.save()
-        
+
         return redirect("/good/")
 
-    #count += 1  여기 때문에 meeting2.html 에서 오류 -> 주석처리
     return render(request, "myapp/meeting2.html")
 
 @csrf_exempt
@@ -231,7 +231,7 @@ def myinfo(request):
     access_token = request.session.get("access_token",None)
     if access_token == None: #로그인 안돼있으면
         return render(request,"myapp/kakaologin.html") #로그인 시키기
-    
+
     account_info = requests.get("https://kapi.kakao.com/v2/user/me", headers={"Authorization": f"Bearer {access_token}"}).json()
     kakao_id = account_info.get("id")
     
@@ -263,13 +263,13 @@ def is_valid_transition(current_page, requested_page):
     return False
 
 @csrf_exempt
-def my(request,id):
-    access_token = request.session.get("access_token",None)
-    if access_token == None: #로그인 안돼있으면
-        return render(request,"myapp/kakaologin.html") #로그인 시키기
-    
-    account_info = requests.get("https://kapi.kakao.com/v2/user/me",
-                                headers={"Authorization": f"Bearer {access_token}"}).json()
+def my(request, id):
+    access_token = request.session.get("access_token", None)
+    if access_token:
+        logged = 1
+        account_info = requests.get("https://kapi.kakao.com/v2/user/me",
+                                    headers={"Authorization": f"Bearer {access_token}"}).json()
+
 
     kakao_id = account_info.get("id")
 
@@ -277,14 +277,14 @@ def my(request,id):
         if int(id) == 1:
             if request.session.get('current_page'):
                 del request.session['current_page']
-        
+
         current_page = request.session.get('current_page', 0)
         if int(id) < current_page:
             current_page = int(id)
 
         if not is_valid_transition(current_page, id):
             # 올바른 페이지 이동이 아니면 거부
-            if current_page == 2 and int(id) == 4 and request.session['sex'] == 'female': #여자면 4로 이동되도록 함. 3이 army여야함
+            if current_page == 2 and int(id) == 4 and request.session['sex'] == 'female':  # 여자면 4로 이동되도록 함. 3이 army여야함
                 request.session['current_page'] = int(id) - 1
                 return redirect("/my/4")
             return HttpResponseForbidden("Forbidden")
@@ -292,9 +292,8 @@ def my(request,id):
         # 페이지 이동을 허용하고, 세션 업데이트
         request.session['current_page'] = int(id)
 
-    
-    #자기소개 한거 있으면 자기소개 내용 불러오고 choose페이지로 넘어가게
-    
+    # 자기소개 한거 있으면 자기소개 내용 불러오고 choose페이지로 넘어가게
+
     index = int(id)
 
     if request.method == "POST":
@@ -303,23 +302,23 @@ def my(request,id):
         elif index == 2:
             request.session['sex'] = request.POST.get("sex")
             if request.session['sex'] == 'female':
-                #request.session['army'] = 'female' 이런식으로 여자면 army값을 넣어줘야함 안그러면 아래에서 NULL입력돼서 매칭 안됨
-                index +=1
+                # request.session['army'] = 'female' 이런식으로 여자면 army값을 넣어줘야함 안그러면 아래에서 NULL입력돼서 매칭 안됨
+                index += 1
         elif index == 3:
-            request.session['job'] = request.POST.get("job")
+            request.session['army'] = request.POST.get("army")
         elif index == 4:
+            request.session['job'] = request.POST.get("job")
+        elif index == 5:
             request.session['school'] = request.POST.get("school")
             request.session['major'] = request.POST.get("major")
-        elif index == 5:
+        elif index == 6:
             selected_mbti = []
             for i in range(1, 5):
                 mbti_value = request.POST.get(f"mbti{i}")
                 if mbti_value:
                     selected_mbti.append(mbti_value)
-                selected_mbti_str = ''.join(selected_mbti)
-                request.session['mbti'] = selected_mbti_str
-        elif index == 6:
-            request.session['army'] = request.POST.get("army")
+            selected_mbti_str = ''.join(selected_mbti)
+            request.session['mbti'] = selected_mbti_str
         elif index == 7:
             request.session['height'] = request.POST.get("height")
         elif index == 8:
@@ -394,12 +393,99 @@ def choose(request):
       
 @csrf_exempt
 def matching(request):
-    return render(request, "myapp/matching.html")
+    access_token = request.session.get("access_token", None)
+    if access_token is None:
+        return render(request, "myapp/kakaologin.html")
+
+    account_info = requests.get("https://kapi.kakao.com/v2/user/me",
+                                headers={"Authorization": f"Bearer {access_token}"}).json()
+
+    if request.method == 'GET':
+        kakao_id = account_info.get("id")
+        print("kakao_id: ", kakao_id)
+
+        user_info = Info.objects.get(kakao_id=kakao_id)
+        user_gender = user_info.sex
+        peoplenum = user_info.peoplenum
+        ages = user_info.ages.split(',')
+        jobs = user_info.jobs.split(',')
+
+        matched_profiles = match_info_profiles(user_gender, peoplenum, ages, jobs)
+        first_matched_profile = matched_profiles[0]
+
+        if first_matched_profile:
+            user_info.matching_success = True
+            user_info.you_kakao_id = first_matched_profile.kakao_id
+            user_info.matching_time = timezone.now()
+            user_info.save()  # 사용자의 matching_success 필드를 True로 저장
+
+            # 상대방의 matching_success 필드도 업데이트
+            first_matched_profile.matching_success = True
+            first_matched_profile.you_kakao_id = kakao_id
+            first_matched_profile.matching_time = timezone.now()
+            first_matched_profile.save()
+
+            # 매칭 성사 후 한 시간이 지났는지 확인
+            time_elapsed = timezone.now() - user_info.matching_time
+            if time_elapsed.total_seconds() >= 3600:
+                user_info.matching_success = False
+                first_matched_profile.matching_success = False
+                pass
+
+            return render(request, 'myapp/matching.html', {'matched_profile': first_matched_profile})
+        else:
+            no_match_message = "매칭된 상대가 없습니다."
+            return render(request, 'myapp/matching.html', {'no_match_message': no_match_message})
+
+    return render(request, 'myapp/matching.html')
     
 @csrf_exempt
 def matching2(request):
+    access_token = request.session.get("access_token", None)
+    if access_token is None:
+        return render(request, "myapp/kakaologin.html")
 
-    return render(request, "myapp/matching2.html")
+    account_info = requests.get("https://kapi.kakao.com/v2/user/me",
+                                headers={"Authorization": f"Bearer {access_token}"}).json()
+
+    if request.method == 'GET':
+        kakao_id = account_info.get("id")
+        print("kakao_id: ", kakao_id)
+
+        user_info = Info.objects.get(kakao_id=kakao_id)
+        user_gender = user_info.sex
+        peoplenum = user_info.peoplenum
+        ages = user_info.ages.split(',')
+        jobs = user_info.jobs.split(',')
+
+        matched_profiles = match_info_profiles(user_gender, peoplenum, ages, jobs)
+        first_matched_profile = matched_profiles[0]
+
+        if first_matched_profile:
+            user_info.matching_success = True
+            user_info.you_kakao_id = first_matched_profile.kakao_id
+            user_info.matching_time = timezone.now()
+            user_info.save()  # 사용자의 matching_success 필드를 True로 저장
+
+            # 상대방의 matching_success 필드도 업데이트
+            first_matched_profile.matching_success = True
+            first_matched_profile.you_kakao_id = kakao_id
+            first_matched_profile.matching_time = timezone.now()
+            first_matched_profile.save()
+
+            # 매칭 성사 후 한 시간이 지났는지 확인
+            time_elapsed = timezone.now() - user_info.matching_time
+            if time_elapsed.total_seconds() >= 3600:
+                user_info.matching_success = False
+                first_matched_profile.matching_success = False
+                pass
+
+            return render(request, 'myapp/matching2.html', {'matched_profile': first_matched_profile})
+        else:
+            no_match_message = "매칭된 상대가 없습니다."
+            return render(request, 'myapp/matching2.html', {'no_match_message': no_match_message})
+
+    return render(request, 'myapp/matching2.html')
 @csrf_exempt
 def matching3(request):
 
